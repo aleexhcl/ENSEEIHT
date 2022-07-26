@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Locations >
+  <Project>
+    <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_file>
+    <file_marker column=" 1" line=" 18" >
+      <vfs_project>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_project>
+      <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/lr-synchro-basique.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 8" >
+      <vfs_project>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_project>
+      <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/lr-synchro.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 17" line=" 29" >
+      <vfs_project>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_project>
+      <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/lr-synchro-exclusion.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 44" line=" 20" >
+      <vfs_project>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_project>
+      <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/lr-tasks.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 18" >
+      <vfs_project>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_project>
+      <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/lr-synchro-basique.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_project>
+      <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/lr-main.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 18" line=" 48" >
+      <vfs_project>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_project>
+      <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/lr-main.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_project>
+      <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/lr-simu.adb</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 1" >
+      <vfs_project>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_project>
+      <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/lr-main.adb</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 1" line=" 1" >
+      <vfs_project>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/build.gpr</vfs_project>
+      <vfs_file>/home/ahuclhui/2A/sys_concu/TP-Ada-LR/lr-tasks.adb</vfs_file>
+    </file_marker>
+  </Project>
+</Locations>

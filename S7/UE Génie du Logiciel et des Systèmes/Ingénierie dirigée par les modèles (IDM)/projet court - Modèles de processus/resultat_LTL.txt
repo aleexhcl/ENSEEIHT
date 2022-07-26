@@ -1,0 +1,51 @@
+INVARIANT :
+
+
+selt -p -S pdl-sujet.scn pdl-sujet.ktz -prelude pdl-sujet.LTLinv.ltl
+Selt version 3.4.4 -- 01/05/16 -- LAAS/CNRS
+ktz loaded, 26 states, 47 transitions
+0.001s
+
+- source pdl-sujet.LTLinv.ltl;
+TRUE
+TRUE
+TRUE
+TRUE
+0.001s
+
+
+TERMINAISON : 
+
+
+selt -p -S pdl-sujet.scn pdl-sujet.ktz -prelude pdl-sujet.LTLterm.ltl
+Selt version 3.4.4 -- 01/05/16 -- LAAS/CNRS
+ktz loaded, 26 states, 47 transitions
+0.001s
+
+- source pdl-sujet.LTLterm.ltl;
+operator process_fini : prop
+TRUE
+TRUE
+FALSE
+  state 0: Conception_ready Programmation_ready RedactionDoc_ready RedactionTests_ready
+  -Conception_start->
+  state 1: Conception_started ConceptionstartToStartRedactionDoc ConceptionstartToStartRedactionTests Programmation_ready RedactionDoc_ready RedactionTests_ready
+  -Conception_finish->
+  state 2: Conception_finished ConceptionfinishToFinishRedactionDoc ConceptionfinishToStartProgrammation ConceptionstartToStartRedactionDoc ConceptionstartToStartRedactionTests Programmation_ready RedactionDoc_ready RedactionTests_ready
+  -Programmation_start->
+  state 3: Conception_finished ConceptionfinishToFinishRedactionDoc ConceptionfinishToStartProgrammation ConceptionstartToStartRedactionDoc ConceptionstartToStartRedactionTests Programmation_started RedactionDoc_ready RedactionTests_ready
+  -Programmation_finish->
+  state 4: Conception_finished ConceptionfinishToFinishRedactionDoc ConceptionfinishToStartProgrammation ConceptionstartToStartRedactionDoc ConceptionstartToStartRedactionTests Programmation_finished ProgrammationfinishToFinishRedactionTests RedactionDoc_ready RedactionTests_ready
+  -RedactionDoc_start->
+  state 5: Conception_finished ConceptionfinishToFinishRedactionDoc ConceptionfinishToStartProgrammation ConceptionstartToStartRedactionDoc ConceptionstartToStartRedactionTests Programmation_finished ProgrammationfinishToFinishRedactionTests RedactionDoc_started RedactionTests_ready
+  -RedactionDoc_finish->
+  state 6: Conception_finished ConceptionfinishToFinishRedactionDoc ConceptionfinishToStartProgrammation ConceptionstartToStartRedactionDoc ConceptionstartToStartRedactionTests Programmation_finished ProgrammationfinishToFinishRedactionTests RedactionDoc_finished RedactionTests_ready
+  -RedactionTests_start->
+  state 7: Conception_finished ConceptionfinishToFinishRedactionDoc ConceptionfinishToStartProgrammation ConceptionstartToStartRedactionDoc ConceptionstartToStartRedactionTests Programmation_finished ProgrammationfinishToFinishRedactionTests RedactionDoc_finished RedactionTests_started
+  -RedactionTests_finish->
+  state 8: L.dead Conception_finished ConceptionfinishToFinishRedactionDoc ConceptionfinishToStartProgrammation ConceptionstartToStartRedactionDoc ConceptionstartToStartRedactionTests Programmation_finished ProgrammationfinishToFinishRedactionTests RedactionDoc_finished RedactionTests_finished
+  -L.deadlock->
+  state 9: L.dead Conception_finished ConceptionfinishToFinishRedactionDoc ConceptionfinishToStartProgrammation ConceptionstartToStartRedactionDoc ConceptionstartToStartRedactionTests Programmation_finished ProgrammationfinishToFinishRedactionTests RedactionDoc_finished RedactionTests_finished
+  [accepting all]
+0.001s
+

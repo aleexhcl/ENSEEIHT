@@ -1,0 +1,56 @@
+import 'model/generated/Game.ecore'
+
+package game
+
+context Jeu
+
+inv unJoueur('Un joueur'): self.explorateur->size()=1
+
+inv unDepart('Un lieu de départ'): self.depart->size()=1
+
+inv auMoinsUneFin('Au moins un lieu de fin'): self.fins->size()>=1
+
+inv uniqueObjet('objet doivent être différents'): self.objets->isUnique(name)
+
+
+context Joueur
+def: jeu(): Jeu =
+	Jeu.allInstances()
+		->select(p | p.explorateur->includes(self))
+		->asSequence()->first()
+		
+inv respectCapacite('Capacite non respecté') : self.tailleLimite>= self.objetsPossedes->collect(o|o.nbPoss*o.objet.taille)->sum()
+
+
+context Objet
+def: jeu2(): Jeu =
+	Jeu.allInstances()
+		->select(p | p.objets->includes(self))
+		->asSequence()->first()
+
+inv quantitePositive('quantité doit être positive'): self.quantite>=0
+
+context ObjetPresent
+inv nbPossPositif('Nombre objet possédé positif'): self.nbPoss>=0
+
+
+context Personne
+inv choixDifferents('Choix doivent être différents'): self.interaction->isUnique(name)
+
+
+context Choix
+inv actionDifferentes('Actions doivent être différentes'): self.actions->isUnique(name)
+
+
+context Lieu
+def: jeu(): Jeu =
+	Jeu.allInstances()
+		->select(p | p.lieux->includes(self))
+		->asSequence()->first()
+		
+inv unePersonneObligatoire('Une personne obligatoire par lieu'): self.personnes->select(p|p.Obligatoire=true)->size()<=1
+
+inv unCheminObligatoire('Un chemin obligatoire par lieu'): self.jeu().chemins->select(c|c.successor=self or c.predecessor=self)->select(c| c.Obligatoire)->size()<=1
+
+
+endpackage

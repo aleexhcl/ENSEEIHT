@@ -1,0 +1,44 @@
+note 
+
+part3
+
+TMPP
+scenario0 > qd deux actions diff a la suite traite de la me variable
+la deuxieme est annulée par la premiere a cause des conflits , si
+un des T annulé alors peut reprendre modif de la variable depuis
+un autre T
+> reste slmt T3 a la fin (conflit lect / ecriture) pour scen0
+> reste slmt T1 a la fin pour scen00
+
+TM2PL
+si utilisation de la mm var , bloque tous les T suivant utilisant 
+la mm var , n'annule pas les modif faites avant 
+> scen00 tous bloqués à la fin,  slmt y de modif
+
+TMPC
+modif enregistrees au fil du temps, pas de bloquage quand utilise une
+mm var, T1 prio s'éxécute jusquau bout puis t2 puis T3 > si conflit
+sur la valeur d'une var , le plus recent est abandonné 
+
+
+part4
+
+TM2PL sc1
+bloque qd mm var utilisée; puis reprend execution du premier en 
+temps (= celui qui a voulu modif en premier dans le temps mais
+qui a ete bloque par son t precedent) quand le T utilisant 
+en premier la var a fini de commit
+> process x = commence au bout du temps x
+
+TMPC sc2
+idem part1 pour bloq
+lance en mm temps execution en parallele , si conflit abandon du 
+dernier arrivé 
+> donne temps optimal 
+
+TMPC sc3
+idem sc2 sauf que relance quand opé non validee au commit 
+> plus temps optimal, reprend en plus le temps du dernier a relancer
+tout seul sans concu avec les autres 
+
+

@@ -1,0 +1,91 @@
+grammar fr.n7.Game with org.eclipse.xtext.common.Terminals
+
+generate game "http://www.n7.fr/Game"
+
+
+
+Jeu:
+	name=ID 
+	'{'
+	(connaissances+=Connaissance)*
+	objets+=Objet*
+	lieux+=Lieu*
+	chemins+=Chemin* 
+	explorateur=Joueur
+	'depart' depart=[Lieu]
+    'fin' (fins+=[Lieu])+
+    '}';
+	
+
+Lieu: 
+	'lieu' name=ID
+	('objetsPresentes' '{'(objetsPresents+=ObjetPresent)(';' objetsPresents+=ObjetPresent)* '}')?
+	('connaissancesPresentes' '{'(connaissances+=[Connaissance])(';' connaissances+=[Connaissance])* '}')?
+	('personnesPresentes' '{' (personnes+=Personne)(';' personnes+=Personne)* '}')?;
+
+Chemin: 
+	'chemin' name=ID
+	'reliant' predecessor=[Lieu]
+	'à' successor=[Lieu ] 
+    ('objetsTransmis' '{' objetsTransmises+=ObjetPresent (';' objetsTransmises+=ObjetPresent)* '}')?
+	('connaissancesTransmises' '{' connaissancesTransmises+=[Connaissance] (';' connaissancesTransmises+=[Connaissance])* '}')?
+	('objetsConsommes' '{' objetsCons+=ObjetPresent (';' objetsCons+=ObjetPresent)* '}')?
+	('visible' (conditionVisible=Condition))?
+	(Obligatoire?='obligatoire')?
+    ('ouvert' conditionOuvert=Condition)?;    
+
+Joueur:
+	'joueur' name=ID
+	('objetsPossedes' '{' objetsPossedes+=ObjetPresent (';' objetsPossedes+=ObjetPresent)* '}')?
+	('connaissancesPossedees' '{' connaissancesPossedees+=[Connaissance] (';' connaissancesPossedees+=[Connaissance])* '}')?
+	'position' position=[Lieu]
+	'tailleLimite' tailleLimite=INT;
+
+Condition: 
+	name = ID
+	'condition' (disjonctions+=Disjonction)('ou'disjonctions+=Disjonction)*;
+ 
+Disjonction:
+	name = ID
+	(conjonctions += Conjonction)('et' conjonctions += Conjonction)*;
+
+Conjonction : (ObjetPresent | ConditionCon);
+
+ConditionCon :
+	(Negation?='Negation')?
+	connaissance = [Connaissance];
+
+Personne:
+	'personne' name=ID
+	('propose' '{' (interaction+=Choix)* '}')?
+	('visible' (conditionVisible=Condition))?
+	(Obligatoire?='obligatoire')?
+	('consomme' '{' objetsCons+=ObjetPresent (';' objetsCons+=ObjetPresent)* '}')?;
+	
+Choix:
+	name=ID
+	'listeActions' '{' (actions+=Action)* '}'
+	('actionChoisie' actionChoisie=[Action])?
+    ('apparaitSi' condition = Condition)?;
+    
+Action:
+	'action' name=ID
+	('choixPrecedent' choixPrecedent = [Choix])?
+ 	(valeur=STRING)?
+ 	('objetsAtransmettre' '{' objetsAtrans+=ObjetPresent (';' objetsAtrans+=ObjetPresent)* '}')?
+	('connaissancesAtransmettre' '{' connaissancesAtransmettre+=[Connaissance] (';' connaissancesAtransmettre+=[Connaissance])* '}')?
+ 	('possibleSi' conditionPoss = Condition)?
+ 	('transmetsSi' conditionTrans = Condition)?;
+
+Objet:
+	'objet' name=ID
+    'taille' taille=INT
+	'quantite' quantite=INT;
+
+ObjetPresent:	
+	'estUn' objet=[Objet]  
+	'quantitePossedee' nbPoss=INT;
+
+Connaissance:
+	'connaissance' name=ID 
+	('contenu' valeur=STRING)?;

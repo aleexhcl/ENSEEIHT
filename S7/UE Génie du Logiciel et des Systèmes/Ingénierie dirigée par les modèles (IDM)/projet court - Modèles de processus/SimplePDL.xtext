@@ -1,0 +1,36 @@
+grammar fr.n7.SimplePDL with org.eclipse.xtext.common.Terminals
+generate simplePDL "http://www.n7.fr/simplePDL"
+
+Process :
+	'process' name=ID '{'
+	    processElements+=ProcessElement*
+	'}' ;
+
+ProcessElement :
+	WorkDefinition | WorkSequence | Guidance | Ressource | RessourcesNecessaires;
+
+WorkDefinition :
+	'wd' name=ID;
+
+WorkSequence :
+	'ws' linkType=WorkSequenceType
+		'from' predecessor=[WorkDefinition]
+		'to' successor=[WorkDefinition] ;
+
+Guidance :
+	'note' texte=STRING ;
+	
+Ressource :
+	'ressource' name=ID 'quantite' quantite=INT;
+
+RessourcesNecessaires :
+	'wd' ressourcePredecessor=[WorkDefinition] 'necessite' nb=INT 'de' ressourceutilise=[Ressource];
+
+enum WorkSequenceType :
+	start2start = 's2s'
+	| finish2start = 'f2s'
+	| start2finish = 's2f'
+	| finish2finish = 'f2f'
+	;
+
+

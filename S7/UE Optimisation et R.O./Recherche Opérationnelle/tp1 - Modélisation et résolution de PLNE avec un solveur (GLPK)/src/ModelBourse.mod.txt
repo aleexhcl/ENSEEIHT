@@ -1,0 +1,87 @@
+###############################  Model ###############################
+
+
+###############################  Sets  ###############################
+
+set PRODUITSFIN; #les produits financiers
+
+## separations des produits financiers en categories ##
+
+set METAUX; # métaux dans PRODUITSFIN
+
+set CREDETOBLIG;	# credits commerciaux et obligations dans PRODUITSFIN
+
+################### Variables ###################
+
+var investi{i in PRODUITSFIN}, >=0; 
+
+###################  Constants: Data to load   #########################
+
+param placement; # argent investi au départ 
+
+param tauxinteret{i in PRODUITSFIN};
+
+param coefrisque{i in PRODUITSFIN};
+
+################### Constraints ###################
+
+
+s.t. CondMemeProd{i in PRODUITSFIN}:
+  investi[i] <= placement*0.25;
+
+s.t. CondRisqueGlob:
+  sum{i in PRODUITSFIN} coefrisque[i]*investi[i] <= 2* (sum{j in PRODUITSFIN} investi[j]);
+
+s.t. CondMetaux:
+  sum{i in METAUX} investi[i] >= 0.3*placement;
+
+s.t. CondCredEtObli:
+  sum{i in CREDETOBLIG} investi[i] >= 0.45*placement;
+  
+s.t. Total:
+  sum{i in PRODUITSFIN} investi[i] <= placement;
+
+###### Objective ######
+
+maximize Strategie: 
+		sum{i in PRODUITSFIN} tauxinteret[i]*investi[i]; 
+
+
+data;
+
+set PRODUITSFIN :=
+  credits_commerciaux
+  obligations_societes
+  stocks_or
+  stocks_platine
+  titres_hypothecaires
+  prets_construction;
+  
+set METAUX := 
+  stocks_or
+  stocks_platine;
+
+set CREDETOBLIG :=
+  credits_commerciaux
+  obligations_societes;
+
+param placement := 5000000;
+
+param tauxinteret :=
+  credits_commerciaux 0.07
+  obligations_societes 0.1
+  stocks_or 0.19
+  stocks_platine 0.12
+  titres_hypothecaires 0.08
+  prets_construction 0.14;
+
+param coefrisque :=
+  credits_commerciaux 1.7
+  obligations_societes 1.2
+  stocks_or 3.7
+  stocks_platine 2.4
+  titres_hypothecaires 2.0
+  prets_construction 2.9;
+
+
+end;

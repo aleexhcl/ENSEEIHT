@@ -1,0 +1,8 @@
+model S {
+    block Justin (joe : in float [ 2 ] );
+	flow f from Justin.aubin to Joe.habre, Alexis.maffart;
+	
+	system Alexis(maffart : in int) {
+	       flow a from a to b;
+	}
+}

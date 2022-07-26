@@ -1,0 +1,116 @@
+module SimplePDL2PetriNet;
+create OUT: petrinet from  IN: simplepdl;
+
+-- Obtenir le processus qui contient ce process element.
+-- Remarque: Ce helper ne serait pas utile si une r�f�rence opposite
+-- avait �t� plac�e entre Process et ProcessElement
+helper context simplepdl!ProcessElement
+def: getProcess(): simplepdl!Process =
+	simplepdl!Process.allInstances()
+		->select(p | p.processElements->includes(self))
+		->asSequence()->first();
+
+-- Traduire un Process en un PetriNet de m�me nom
+rule Process2PetriNet {
+	from p: simplepdl!Process
+	to pn: petrinet!ReseauPetri (name <- p.name)
+}
+
+-- Traduire une WorkDefinition en un motif sur le r�seau de Petri
+
+rule WorkDefinition2PetriNet {
+	from wd: simplepdl!WorkDefinition
+	to
+		-- PLACES d'une WorkDefinition
+		p_ready: petrinet!Place(
+				name <- wd.name + '_ready',
+				nbJetons <- 1,
+				reseaupetri <- wd.getProcess()),
+		p_started: petrinet!Place(
+				name <- wd.name + '_started',
+				nbJetons <- 0,
+				reseaupetri <- wd.getProcess()),
+		p_finished : petrinet!Place(
+				name <- wd.name + '_finished',
+				nbJetons <- 0,
+				reseaupetri <- wd.getProcess()),
+		-- TRANSITIONS
+		p_start : petrinet!Transition(
+				name <- wd.name + '_start',
+				reseaupetri <- wd.getProcess()),
+		p_finish : petrinet!Transition(
+				name <- wd.name + '_finish',
+				reseaupetri <- wd.getProcess()),
+		-- ARCS
+		a_r2s : petrinet!Arc(
+				predecessor <- p_ready,
+				successor <- p_start,
+				nbJetons <- 1,
+				reseaupetri <- wd.getProcess()),
+		a_s2s : petrinet!Arc(
+				predecessor <- p_start,
+				successor <- p_started,
+				nbJetons <- 1,
+				reseaupetri <- wd.getProcess()),
+		a_s2f : petrinet!Arc(
+				predecessor <- p_started,
+				successor <- p_finish,
+				nbJetons <- 1,
+				reseaupetri <- wd.getProcess()),
+		a_f2f : petrinet!Arc(
+				predecessor <- p_finish,
+				successor <- p_finished,
+				nbJetons <- 1,
+				reseaupetri <- wd.getProcess())
+}
+	
+rule WorkSequence2PetriNet {
+	from ws: simplepdl!WorkSequence
+	to
+		pws: petrinet!Place(
+				name<-ws.predecessor.name+ws.linkType.toString()+ws.successor.name,
+				nbJetons<-0,
+				reseaupetri<-ws.getProcess()
+			),
+		arc : petrinet!Arc(
+			predecessor <-thisModule.resolveTemp( ws.predecessor,  if ws.linkType.toString().equals( 'startToStart') or ws.linkType.toString().equals('startToFinish')  then 'p_start' else 'p_finish' endif),
+			successor<- pws,
+			nbJetons <-1,
+			reseaupetri<-ws.getProcess()
+			),
+			
+		rdarc: petrinet!ReadArc(
+			predecessor <-pws,
+			successor<- thisModule.resolveTemp(ws.successor, if ws.linkType.toString().equals( 'startToStart') or ws.linkType.toString().equals('finishToStart')  then 'p_start' else 'p_finish' endif),
+			reseaupetri<- ws.getProcess(),
+			nbJetons <-1)
+}
+rule Ressource2Petrinet {
+	from r: simplepdl!Ressource
+	to 
+		pr: petrinet!Place(
+			name<-r.name,
+			nbJetons<-r.quantite,
+			reseaupetri<-r.getProcess()
+			)
+}
+rule RessourcesNecessaires2Petrinet {
+	from rn: simplepdl!RessourcesNecessaires
+	to 
+			
+		arc1: petrinet!Arc(
+			predecessor<-rn.ressourceutilise,
+			successor<-thisModule.resolveTemp(rn.ressourcePredecessor,'p_start'),
+			nbJetons<-rn.nb,
+			reseaupetri<-rn.ressourcePredecessor.getProcess()
+			),
+		
+		
+		arc3: petrinet!Arc(
+			predecessor<-thisModule.resolveTemp(rn.ressourcePredecessor,'p_finish'),
+			successor<-rn.ressourceutilise,
+			nbJetons<-rn.nb,
+			reseaupetri<-rn.ressourcePredecessor.getProcess()
+			)		
+}
+

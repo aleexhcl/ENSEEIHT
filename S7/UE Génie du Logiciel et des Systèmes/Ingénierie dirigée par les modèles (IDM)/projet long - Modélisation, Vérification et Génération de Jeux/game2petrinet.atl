@@ -1,0 +1,387 @@
+module game2petrinet;
+create OUT: petrinet from  IN: game;
+
+
+-- Traduire un Jeu en un PetriNet de même nom
+rule Game2PetriNet {
+	from j: game!Jeu
+	to pn: petrinet!PetriNet
+}
+
+helper context game!Objet
+def: getObjetPresentFromObjet(): game!ObjetPresent =
+	game!ObjetPresent.allInstances()
+		->select(o | o.objet = self)
+		->asSequence()->first();
+
+-- Traduire un objet en un motif sur le réseau de Petri
+rule Objet2PetriNet {
+	from objet: game!Objet
+	to
+		-- PLACES d'un objet, le nombre de jetons représente la quantité de cet objet possédée par le joueur
+		p_objet: petrinet!Place(
+				name <- objet.name,
+				nbJeton <- objet.getObjetPresentFromObjet().nbPoss
+				)
+}
+
+
+helper context game!Connaissance
+def: getJeuFromConnaissance(): game!Jeu =
+	game!Jeu.allInstances()
+		->select(j | j.connaissances.includes(self))
+		->asSequence()->first();
+
+-- Traduire une connaissance en un motif sur le réseau de Petri
+rule Connaissance2PetriNet {
+	from connaissance: game!Connaissance
+	to
+		-- PLACES d'une connaissance, le nombre de jetons vaut 1 si le joueur possède la connaissance et 0 sinon
+		p_connaissance: petrinet!Place(
+				name <- connaissance.name,
+				nbJeton <- connaissance.getJeuFromConnaissance().explorateur.connaissancesPossedees->select(c | c = connaissance)->asSequence()->size()
+				)
+}
+
+-- Traduire un lieu en un motif sur le réseau de Petri
+rule Lieu2PetriNet {
+	from lieu: game!Lieu
+	to
+		-- PLACES d'un lieu
+		p_lieu_connaissances: petrinet!Place(
+			name <- lieu.name + 'connaissances'),
+		p_lieu_objets: petrinet!Place(
+			name <- lieu.name + 'objets'),
+		p_lieu_finale: petrinet!Place(
+			name <- lieu.name + 'finale'),
+		t_prendre_connaissances: petrinet!Transition( 
+			name <- 'prendre_connaissance'),
+		t_vers_personnes: petrinet!Transition(
+			name <- lieu.name + 'vers_personnes'),
+		arc_lieu_1: petrinet!Arc(
+			source <- p_lieu_connaissances,
+			cible <- t_prendre_connaissances,
+			poids <- 1),
+		arc_lieu_2: petrinet!Arc(
+			source <- t_prendre_connaissances,
+			cible <- p_lieu_objets,
+			poids <- 1),
+		p_lieu_personnes: petrinet!Place(
+			name <- lieu.name + 'personnes'),
+		arc_lieu_3 : petrinet!Arc(
+			source <- t_vers_personnes,
+			cible <- p_lieu_personnes,
+			poids <- 1)
+}
+
+
+-- Traduire les connaissances présentes dans un lieu en un motif sur le réseau de Petri
+rule ConnaissanceLieu2PetriNet {
+	from lieu: game!Lieu, connaissance: game!Connaissance (lieu.connaissancesPresentes.includes(connaissance))
+	to
+		t_recuperer_connaissance: petrinet!Transition(
+			name <- 'récupérer' + connaissance.name),
+		readarc_1: petrinet!Arc(
+				source <- thisModule.resolveTemp(lieu, 'p_lieu_connaissances'),
+				cible <- t_recuperer_connaissance,
+				poids <- 1,
+				typeArc <- #readArc),
+		readarc_2: petrinet!Arc(
+				source <- connaissance,
+				cible <- thisModule.resolveTemp(lieu, 't_prendre_connaissances'),
+				poids <- 1,
+				typeArc <- #readArc),
+		arc_1: petrinet!Arc(
+				source <- t_recuperer_connaissance,
+				cible <- connaissance,
+				poids <- 1)
+}
+
+
+-- Traduire les connaissances présentes dans un lieu en un motif sur le réseau de Petri
+rule ObjetLieu2PetriNet {
+	from lieu: game!Lieu, objetPresent: game!ObjetPresent (lieu.objetsPresents.includes(objetPresent))
+	to
+		t_recuperer_objet: petrinet!Transition(
+			name <- lieu.name + 'récupérer' + objetPresent.name),
+		readarc: petrinet!Arc(
+			source <- thisModule.resolveTemp(lieu, 'p_lieu_objets'),
+			cible <- t_recuperer_objet,
+			poids <- 1,
+			typeArc <- #readArc
+			),
+		arc: petrinet!Arc(
+			source <- t_recuperer_objet,
+			cible <- objetPresent.objet,
+			poids <- objetPresent.quantitePossedee
+			)		
+}
+
+
+rule PersonnesObligatoire2PetriNet {
+			from lieu: game!Lieu, personne: game!Personne (personne.Obligatoire)	
+			to
+				p_personne_obligatoire: petrinet!Place(
+					name <- personne.name)
+}
+
+
+rule ConditionPersonne2PetriNet {
+		from lieu: game!Lieu, personne: game!Personne, condition: game!Condition, disjonction: game!Disjonction (personne.conditionVisible.includes(condition) and condition.disjonctions.includes(disjonction))
+		to
+			t_est_visible_personne: petrinet!Transition( 
+				name <- 'est_visible' + personne.name + disjonction.name),
+			arc_condition1: petrinet!Arc(
+				source <- thisModule.resolveTemp(lieu, 'p_lieu_personnes'),
+				cible <- t_est_visible_personne,
+				poids <- 1),
+			arc_condition_2: petrinet!Arc(
+				source <- t_est_visible_personne,
+				cible <- thisModule.resolveTemp(lieu, 'p_personne_obligatoire'),
+				poids <- 1)
+}
+
+
+rule Conjonction2PetriNet {
+		from personne: game!Personne, condition: game!Condition, disjonction: game!Disjonction, conjonction: game!Conjonction (personne.conditionVisible.includes(condition) and condition.disjonctions.includes(disjonction) and disjonction.conjonctions.includes(conjonction))
+		to
+			arc: petrinet!Arc(
+				source <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).objet) else (conjonction.oclAsType(game!ConnaissanceCon).connaissance) endif,
+				cible <- thisModule.resolveTemp(disjonction ,'t_est_visible_personne'),
+				poids <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).nbPoss) else 1 endif,
+				typeArc <- if (conjonction.oclIsKindOf(game!ConnaissanceCon)) then
+					(if (conjonction.oclAsType(game!ConnaissanceCon).negation) then #inhibiteurArc else #readArc endif)
+					else #readarc endif)
+}
+
+rule Choix2PetriNet {
+		from personne: game!Personne, choix: game!Choix (personne.interaction.includes(choix))
+		to
+			p_choix: petrinet!Place(
+				name <- choix.name + personne.name)	
+}
+
+
+rule ConditionChoix2PetriNet {
+		from personne: game!Personne, choix: game!Choix, conditionchoix: game!Condition, disjonction: game!Disjonction (choix.condition.includes(conditionchoix) and conditionchoix.disjonctions.includes(disjonction))
+		to
+			t_est_visible_choix: petrinet!Transition( 
+				name <- 'est_visible' + choix.name + disjonction.name),
+			arc_choix_1: petrinet!Arc(
+				source <- thisModule.resolveTemp(personne, 'p_personne_obligatoire'),
+				cible <- t_est_visible_choix,
+				poids <- 1),
+			arc_choix_2: petrinet!Arc(
+				source <- t_est_visible_choix,
+				cible <- thisModule.resolveTemp(choix, 'p_choix'),
+				poids <- 1)	
+}
+
+
+rule ConjonctionChoix2PetriNet {
+		from choix: game!Choix, conditionchoix: game!Condition, disjonction: game!Disjonction, conjonction: game!Conjonction (choix.condition.includes(conditionchoix) and conditionchoix.disjonctions.includes(disjonction) and disjonction.conjonctions.includes(conjonction))
+		to
+			arc: petrinet!Arc(
+				source <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).objet) else (conjonction.oclAsType(game!ConnaissanceCon).connaissance) endif,
+				cible <- thisModule.resolveTemp(disjonction ,'t_est_visible_choix'),
+				poids <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).nbPoss) else 1 endif,
+				typeArc <- if (conjonction.oclIsKindOf(game!ConnaissanceCon)) then
+					(if (conjonction.oclAsType(Cgame!onnaissaneCon).negation) then #inhibiteurArc else #readArc endif)
+					else #readarc endif)
+}
+
+
+rule Action2PetriNet {
+		from lieu: game!Lieu, personne: game!Personne, choix: game!Choix, action: game!Action (choix.actions.includes(action) and personne.interaction.includes(choix))
+		to
+			p_action: petrinet!Place(
+				name <- action.name),
+			t_action_choisi: petrinet!Transition(
+				name <- action.name + 'choisi'),
+			arc_action_1: petrinet!Arc(
+				source <- t_action_choisi,
+				cible <- thisModule.resolveTemp(lieu , 'p_personne_obligatoire'),
+				poids <- 1),
+			arc_action_2: petrinet!Arc(
+				source <- p_action,
+				cible <- t_action_choisi,
+				poids <- 1),
+			p_action_transmission: petrinet!Place(
+				name <- action.name + 'transmission')
+}
+
+
+rule ConditionAction2PetriNet {
+		from choix: game!Choix, action: game!Action, conditionaction: game!Condition, disjonction: game!Disjonction (action.condition.includes(conditionaction) and conditionaction.disjonctions.includes(disjonction))
+		to
+			t_est_visible_action: petrinet!Transition( 
+				name <- 'est_visible' + choix.name + disjonction.name),
+			arc_choix_1: petrinet!Arc(
+				source <- thisModule.resolveTemp(choix , 'p_choix'),
+				cible <- t_est_visible_action,
+				poids <- 1),
+			arc_choix_2: petrinet!Arc(
+				source <- t_est_visible_action,
+				cible <- thisModule.resolveTemp(action, 'p_action'),
+				poids <- 1)
+}
+
+
+rule ConjonctionAction2PetriNet {
+		from choix: game!Choix, action: game!Action, conditionaction: game!Condition, disjonction: game!Disjonction, conjonction: game!Conjonction (action.condition.includes(conditionaction) and conditionaction.disjonctions.includes(disjonction) and disjonction.conjonctions.includes(conjonction) and choix.actions.includes(action))
+		to
+			arc: petrinet!Arc(
+				source <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).objet) else (conjonction.oclAsType(game!ConnaissanceCon).connaissance) endif,
+				cible <- thisModule.resolveTemp(disjonction, 't_est_visible_action'),
+				poids <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).nbPoss) else 1 endif,
+				typeArc <- if (conjonction.oclIsKindOf(game!ConnaissanceCon)) then
+					(if (conjonction.oclAsType(game!ConnaissanceCon).negation) then #inhibiteurArc else #readArc endif)
+					else #readarc endif)	
+}
+
+
+rule DisjonctionActionTransmission2PetriNet {
+		from choix: game!Choix, action: game!Action, conditionaction: game!Condition, disjonction: game!Disjonction (action.condition.includes(conditionaction) and conditionaction.disjonctions.includes(disjonction))
+		to
+			t_est_possible_transmission: petrinet!Transition( 
+				name <- 'est_possible_transmission' + action.name + disjonction.name),
+			arc_choix_1: petrinet!Arc(
+				source <- thisModule.resolveTemp(action, 'p_action'),
+				cible <- t_est_possible_transmission,
+				poids <- 1),
+			arc_choix_2: petrinet!Arc(
+				source <- t_est_possible_transmission,
+				cible <- thisModule.resolveTemp(action, 'p_action_transmission'),
+				poids <- 1)
+}
+
+
+rule ConjonctionActionTransmission2PetriNet {
+		from choix: game!Choix, action: game!Action, conditionaction: game!Condition, disjonction: game!Disjonction, conjonction: game!Conjonction (action.condition.includes(conditionaction) and conditionaction.disjonctions.includes(disjonction) and disjonction.conjonctions.includes(conjonction) and choix.actions.includes(action))
+		to
+			arc: petrinet!Arc(
+				source <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).objet) else (conjonction.oclAsType(game!ConnaissanceCon).connaissance) endif,
+				cible <- thisModule.resolveTemp(disjonction, 't_est_possible_transmission'),
+				poids <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).nbPoss) else 1 endif,
+				typeArc <- if (conjonction.oclIsKindOf(game!ConnaissanceCon)) then
+					(if (conjonction.oclAsType(game!ConnaissanceCon).negation) then #inhibiteurArc else #readArc endif)
+					else #readarc endif)
+}
+
+
+rule ConditionTransmissionObjet2PetriNet {
+	from action: game!Action, objetpresent: game!ObjetPresent (action.objetsAtrans.includes(objetpresent))
+	to
+		t_transmission_objet: petrinet!Transmission(
+			name <- 'transmission' + objetpresent.name),
+		arc_transmission_objet_1: petrinet!Arc(
+			source <- thisModule.resolveTemp(action, 'p_action_transmission'), 
+			cible <- t_transmission_objet,
+			poids <- 1),
+		arc_transmission_objet_2: petrinet!Arc(
+			source <- t_transmission_objet, 
+			cible <- objetpresent.objet,
+			poids <- objetpresent.nbPoss)
+}
+
+
+rule ConditionTransmissionConnaissance2PetriNet {
+	from action: game!Action, connaissance: game!Connaissance (action.connaissancesAtransmettre.includes(connaissance))
+	to
+		t_transmission_connaissance: petrinet!Transmission(
+			name <- 'transmission' + connaissance.name),
+		arc_transmission_connaissance_1: petrinet!Arc(
+			source <- thisModule.resolveTemp(action, 'p_action_transmission'),
+			cible <- t_transmission_connaissance,
+			poids <- 1),
+		arc_transmission_connaissance_2: petrinet!Arc(
+			source <- t_transmission_connaissance, 
+			cible <- thisModule.resolveTemp(connaissance, 'p_connaissance'),
+			poids <- 1)
+}
+
+
+-- Traduire un chemin en un motif sur le réseau de Petri
+rule Chemin2PetriNet {
+	from chemin: game!Chemin, lieu: game!Lieu (chemin.successor.includes(lieu))
+	to
+		p_chemin: petrinet!Place(
+			name <- chemin.name),
+		t_chemin: petrinet!Transition(
+			name <- 'traverser' + chemin.name),
+		arc_chemin_1: petrinet!Arc(
+			source <- p_chemin,
+			cible <- t_chemin,
+			poids <- 1),
+		arc_chemin_2: petrinet!Arc(
+			source <- t_chemin,
+			cible <- lieu.p_lieu_connaissances,
+			poids <- 1)
+}
+
+
+helper context game!Chemin
+def: getPredecessor(): game!Lieu =
+	game!Chemin.predecessor;
+
+
+rule CheminEstVisibleDisjonction2PetriNet {
+		from chemin: game!Chemin, conditionvisible: game!Condition, disjonction: game!Disjonction (chemin.conditionVisible.includes(conditionvisible) and conditionvisible.disjonctions.includes(disjonction))
+		to
+			t_est_visible: petrinet!Transition( 
+				name <- 'est_visible' + chemin.name + disjonction.name),
+			readarc_est_visible: petrinet!Arc(
+				source <- thisModule.resolveTemp(chemin.getPredecessor(), 'p_lieu_finale'),
+				cible <- t_est_visible,
+				poids <- 1,
+				typeArc <- #readArc
+			),
+			arc_est_visible: petrinet!Arc(
+				source <- t_est_visible,
+				cible <- thisModule.resolveTemp(chemin ,'p_chemin'),
+				poids <- 1)
+}
+
+
+rule CheminEstVisibleConjonction2PetriNet {
+		from chemin: game!Chemin, conditionvisible: game!Condition, disjonction: game!Disjonction, conjonction: game!Conjonction (chemin.conditionVisible.includes(conditionvisible) and conditionvisible.disjonctions.includes(disjonction) and disjonction.conjonctions.includes(conjonction))
+		to
+			arc_conjonction_visible: petrinet!Arc(
+				source <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).objet) else (conjonction.oclAsType(game!ConnaissanceCon).connaissance) endif,
+				cible <- thisModule.resolveTemp(disjonction, 't_est_visible'),
+				poids <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).nbPoss) else 1 endif,
+				typeArc <- if (conjonction.oclIsKindOf(game!ConnaissanceCon)) then
+					(if (conjonction.oclAsType(game!ConnaissanceCon).negation) then #inhibiteurArc else #readArc endif)
+					else #readarc endif)
+}
+
+
+rule CheminEstOuvertDisjonction2PetriNet {
+		from chemin: game!Chemin, conditionouvert: game!Condition, disjonction: game!Disjonction (chemin.conditionOuvert.includes(conditionouvert) and conditionouvert.disjonctions.includes(disjonction))
+		to
+			t_est_ouvert: petrinet!Transition( 
+				name <- 'est_ouvert' + chemin.name + disjonction.name),
+			readarc_est_ouvert: petrinet!Arc(
+				source <- thisModule.resolveTemp(chemin.getPredecessor(), 'p_lieu_finale'),
+				cible <- t_est_ouvert,
+				poids <- 1,
+				typeArc <- #readArc
+			),
+			arc_est_visible: petrinet!Arc(
+				source <- t_est_ouvert,
+				cible <- thisModule.resolveTemp(chemin, 'p_chemin'),
+				poids <- 1)
+}
+
+
+rule CheminEstOuvertConjonction2PetriNet {
+		from chemin: game!Chemin, conditionouvert: game!Condition, disjonction: game!Disjonction, conjonction: game!Conjonction (chemin.conditionOuvert.includes(conditionouvert) and conditionouvert.disjonctions.includes(disjonction) and disjonction.conjonctions.includes(conjonction))
+		to
+			arc_conjonction_ouvert: petrinet!Arc(
+				source <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).objet) else (conjonction.oclAsType(game!ConnaissanceCon).connaissance) endif,
+				cible <- thisModule.resolveTemp(disjonction ,'t_est_ouvert'),
+				poids <- if (conjonction.oclIsKindOf(game!ObjetPresent)) then (conjonction.oclAsType(game!ObjetPresent).nbPoss) else 1 endif,
+				typeArc <- if (conjonction.oclIsKindOf(game!ConnaissanceCon)) then
+					(if (conjonction.oclAsType(game!ConnaissanceCon).negation) then #inhibiteurArc else #readArc endif)
+					else #readarc endif)
+}

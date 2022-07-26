@@ -1,0 +1,50 @@
+import 'PetriNet.ecore'
+
+package petrinet
+	
+
+
+context ReseauPetri
+inv validName('Invalid name: ' + self.name):
+	self.name.matches('[A-Za-z_][A-Za-z0-9_]*')
+
+context PetriElement
+def: reseauPetri(): ReseauPetri =
+	ReseauPetri.allInstances()
+		->select(p | p.petriElements->includes(self))
+		->asSequence()->first()
+
+context Place
+inv differentName('places de meme nom : ' + self.name): 
+	self.reseauPetri().petriElements
+	->select(p| p. oclIsKindOf(Place))
+	->collect(p|p.oclAsType(Place))
+	->select(p|p.name=self.name)->size() = 1
+
+context Transition
+inv differentName('Transitions de meme nom : ' + self.name): 
+	self.reseauPetri().petriElements
+	->select(p| p. oclIsKindOf(Transition))
+	->collect(p|p.oclAsType(Transition))
+	->select(p|p.name=self.name)->size() = 1
+
+context Arc
+
+inv nbJetonsPositif('mauvais nombre de jetons'): self.nbJetons > 0
+
+inv typeDifferents('meme type (place ou transition) autour d''un arc'):
+if self.predecessor.oclIsKindOf(Place) 
+	then self.successor.oclIsKindOf(Transition)
+	else self.successor.oclIsKindOf(Place)
+	endif
+	
+context ReadArc
+inv nbJetonsPositif('mauvais nombre de jetons'): self.nbJetons > 0
+
+inv typeDifferents('meme type (place ou transition) autour d''un arc'):
+if self.predecessor.oclIsKindOf(Place) 
+	then self.successor.oclIsKindOf(Transition)
+	else self.successor.oclIsKindOf(Place)
+	endif
+	
+endpackage

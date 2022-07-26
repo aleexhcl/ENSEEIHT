@@ -1,0 +1,13 @@
+
+OCL SimplePDL :
+
+* La contrainte sur readArc pourrait être plus précise.
+
+
+SimplePDL2PetriNet :
+
+* Le nom du Petri devrait être construit à partir du nom du process.
+* Le traitement des WS n'est pas terminé...
+* Il manque le traitement des ressources.
+
+

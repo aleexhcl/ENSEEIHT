@@ -1,0 +1,17 @@
+optimiste
+serialisabilite
+propag immediate des veur 
+risque inter bloc
+risque rejet en cascade
+
+prot A
+
+pas iterblloc > fait try a chaque 
+veur non immediate
+optim > veur enregistree que si besoin
+non ser > unlock all direct
+
+prot B 
+pas opt > utilise deux mem 
+serialis > mutex pour obt acces mem 
+

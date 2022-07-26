@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game:Jeu xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:game="http://www.n7.fr/Game"
+    xsi:schemaLocation="http://www.n7.fr/Game Game.ecore">
+  <objets name="o1"
+      taille="2"
+      quantite="1"/>
+  <objets name="o2"
+      taille="-1"
+      quantite="-1"/>
+  <objets name="o2"/>
+  <lieux name="l1">
+    <personnes
+        name="p1"
+        Obligatoire="true"/>
+    <personnes
+        name="p2"
+        Obligatoire="true"/>
+  </lieux>
+  <lieux name="l2">
+    <personnes
+        name="p1"
+        Obligatoire="true">
+      <interaction
+          name="choix1">
+        <actions
+            name="action1"/>
+        <actions
+            name="action1"/>
+      </interaction>
+      <interaction
+          name="choix1"/>
+    </personnes>
+    <personnes
+        name="p2"
+        Obligatoire="true"/>
+  </lieux>
+  <lieux name="l3"/>
+  <chemins name="ch12"
+      predecessor="//@lieux.0"
+      successor="//@lieux.1"
+      Obligatoire="true"/>
+  <chemins name="ch13"
+      predecessor="//@lieux.0"
+      successor="//@lieux.2"
+      Obligatoire="true"/>
+  <explorateur
+      name="j2"
+      position="//@lieux.0"
+      tailleLimite="5">
+    <objetsPossedes
+        objet="//@objets.0"
+        nbPoss="2"/>
+  </explorateur>
+</game:Jeu>

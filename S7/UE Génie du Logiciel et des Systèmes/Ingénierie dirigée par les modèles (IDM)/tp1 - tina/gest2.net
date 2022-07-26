@@ -1,0 +1,4 @@
+tr alocate2 Cl1_G2_req G2_Lib -> G2_Cl1_ack
+tr release2 Cl1_G2_release -> G2_Lib
+pl G2_Lib (1)
+

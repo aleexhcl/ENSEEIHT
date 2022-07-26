@@ -1,0 +1,6 @@
+
+[] <> (- ( RedactionDoc_ready /\ RedactionDoc_started )) /\ (- ( RedactionDoc_started /\ RedactionDoc_finished )) /\ (- ( RedactionDoc_finished /\ RedactionDoc_ready ));
+[] <> (- ( Conception_ready /\ Conception_started )) /\ (- ( Conception_started /\ Conception_finished )) /\ (- ( Conception_finished /\ Conception_ready ));
+[] <> (- ( Programmation_ready /\ Programmation_started )) /\ (- ( Programmation_started /\ Programmation_finished )) /\ (- ( Programmation_finished /\ Programmation_ready ));
+[] <> (- ( RedactionTests_ready /\ RedactionTests_started )) /\ (- ( RedactionTests_started /\ RedactionTests_finished )) /\ (- ( RedactionTests_finished /\ RedactionTests_ready ));
+

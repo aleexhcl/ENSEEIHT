@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="game" version="12.0.0.2017041100">
+  <ownedViewpoints name="gameViewpoint" modelFileExtension="game">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="GameDiagram" domainClass="game::Jeu" enablePopupBars="true">
+      <metamodel href="http://www.n7.fr/Game#/"/>
+      <defaultLayer name="Base Jeu">
+        <nodeMappings name="Objet" semanticCandidatesExpression="feature:objets" domainClass="game::Objet">
+          <style xsi:type="style:SquareDescription" labelSize="12" labelPosition="node" resizeKind="NSEW" width="10" height="5">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="Connaissance" semanticCandidatesExpression="feature:connaissances" domainClass="game::Connaissance">
+          <style xsi:type="style:SquareDescription" labelSize="12" labelPosition="node" resizeKind="NSEW" width="10" height="5">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="EDConditionConnaissance" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']/@subContainerMappings[name='CondPossede']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']/@subContainerMappings[name='CondTransm']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='CondChoix']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='CondPersonneVisible']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='CondChemin']/@subContainerMappings[name='ConditionOuvert']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='CondChemin']/@subContainerMappings[name='ConditionVisible']/@subContainerMappings[name='Disjonctions']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Connaissance']">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="EDConditionObjet" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']/@subContainerMappings[name='CondPossede']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']/@subContainerMappings[name='CondTransm']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='CondChoix']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='CondPersonneVisible']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='CondChemin']/@subContainerMappings[name='ConditionOuvert']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='CondChemin']/@subContainerMappings[name='ConditionVisible']/@subContainerMappings[name='Disjonctions']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Objet']">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <toolSections name="Element">
+          <ownedTools xsi:type="tool:NodeCreationDescription" documentation="creer nouvelle une connaissance dans le jeu&#xA;" name="Creer_Connaissance" nodeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Connaissance']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Connaissance" referenceName="connaissances"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" documentation="creer un nouvel objet dans le jeu&#xA;" name="Creer_Objet" nodeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Objet']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Objet" referenceName="objets"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="Condition">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer une disjonction pour une condition&#xA;" name="Creer_Disjonction" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='CondChemin']/@subContainerMappings[name='ConditionOuvert']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='CondChemin']/@subContainerMappings[name='ConditionVisible']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='CondChoix']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='CondPersonneVisible']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']/@subContainerMappings[name='CondPossede']/@subContainerMappings[name='Disjonctions'] //@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']/@subContainerMappings[name='CondTransm']/@subContainerMappings[name='Disjonctions']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Disjonction" referenceName="disjonctions"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer une condition sur une connaissance dans une disjonction&#xA;" name="Creer_Condition_Connaissance" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@edgeMappings[name='EDConditionConnaissance']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::ConditionCon" referenceName="conjonctions">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="connaissance" valueExpression="[target/]"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer une condition sur un objet dans une disjonction" name="Creer_Condition_Objet" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@edgeMappings[name='EDConditionObjet']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::ObjetPresent" referenceName="conjonctions">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objet" valueExpression="[target/]"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+      <additionalLayers name="Interactions">
+        <edgeMappings name="EDConTransmiseAction" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Connaissance']">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="EDObjetsTransmisAction" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Objet']" sourceFinderExpression="aql:self.eInverse('objetsAtrans')" domainClass="game::ObjetPresent" useDomainElement="true">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            <centerLabelStyleDescription labelSize="12" labelExpression="feature:nbPoss">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="EDActionChoisie" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="EDChoixPrecedent" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="EDObjetsConso" documentation="objet consommé lors du passage par le chemin" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Objet']" sourceFinderExpression="aql:self.eInverse('objetsCons')" domainClass="game::ObjetPresent" useDomainElement="true">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_red']"/>
+            <centerLabelStyleDescription labelSize="12" labelExpression="feature:nbPoss">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="LieuInteraction" semanticCandidatesExpression="aql:self.lieux" domainClass="game::Lieu" childrenPresentation="HorizontalStack">
+          <subContainerMappings name="Personne" semanticCandidatesExpression="aql:self.personnes" domainClass="game::Personne" childrenPresentation="HorizontalStack">
+            <subContainerMappings name="Choix" semanticCandidatesExpression="feature:interaction" domainClass="game::Choix">
+              <subNodeMappings name="Action_Choisie" semanticCandidatesExpression="feature:actionChoisie" domainClass="game::Action">
+                <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="aql:'action choisie: '+self.name" labelAlignment="LEFT" resizeKind="NSEW" width="1" height="1">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_chocolate']"/>
+                </style>
+              </subNodeMappings>
+              <subContainerMappings name="CondChoix" semanticCandidatesExpression="aql:self.condition" domainClass="game::Condition" childrenPresentation="HorizontalStack">
+                <subContainerMappings name="Disjonctions" semanticCandidatesExpression="aql:self.disjonctions" domainClass="game::Disjonction" childrenPresentation="List">
+                  <subNodeMappings name="ConjonctionCon" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ConditionCon">
+                    <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.connaissance.name+' '+self.Negation" resizeKind="NSEW">
+                      <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                      <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                      <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                    </style>
+                  </subNodeMappings>
+                  <subNodeMappings name="ConjonctionObj" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ObjetPresent">
+                    <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.nbPoss+' '+self.objet.name" resizeKind="NSEW">
+                      <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                      <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                      <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                    </style>
+                  </subNodeMappings>
+                  <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Disjonction" widthComputationExpression="10" heightComputationExpression="10">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                    <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+                  </style>
+                </subContainerMappings>
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" widthComputationExpression="10" heightComputationExpression="10">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+                </style>
+              </subContainerMappings>
+              <subContainerMappings name="Action" semanticCandidatesExpression="feature:actions" domainClass="game::Action">
+                <subNodeMappings name="ObjTransmis" semanticCandidatesExpression="aql:self.objetsAtrans" domainClass="game::ObjetPresent">
+                  <style xsi:type="style:LozengeNodeDescription" labelSize="12" showIcon="false" labelExpression="aql:'transmet '+self.nbPoss+' '+self.objet.name" sizeComputationExpression="1" resizeKind="NSEW">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                  </style>
+                </subNodeMappings>
+                <subNodeMappings name="ConTransmises" semanticCandidatesExpression="aql:self.connaissancesAtransmettre" domainClass="game::Connaissance">
+                  <style xsi:type="style:LozengeNodeDescription" labelSize="12" showIcon="false" labelExpression="aql:'transmet '+self.name" sizeComputationExpression="1" resizeKind="NSEW">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='purple']"/>
+                  </style>
+                </subNodeMappings>
+                <subNodeMappings name="Choix_Precedent" semanticCandidatesExpression="feature:choixPrecedent" domainClass="game::Choix">
+                  <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="aql:'choix precedent: '+self.name" labelAlignment="RIGHT" resizeKind="NSEW" width="1" height="1">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                  </style>
+                </subNodeMappings>
+                <subContainerMappings name="CondPossede" semanticCandidatesExpression="aql:self.conditionPoss" domainClass="game::Condition" childrenPresentation="HorizontalStack">
+                  <subContainerMappings name="Disjonctions" semanticCandidatesExpression="aql:self.disjonctions" domainClass="game::Disjonction" childrenPresentation="List">
+                    <subNodeMappings name="ConjonctionCon" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ConditionCon">
+                      <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.connaissance.name+' '+self.Negation" resizeKind="NSEW">
+                        <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                        <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                        <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                      </style>
+                    </subNodeMappings>
+                    <subNodeMappings name="ConjonctionObj" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ObjetPresent">
+                      <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.nbPoss+' '+self.objet.name" resizeKind="NSEW">
+                        <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                        <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                        <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                      </style>
+                    </subNodeMappings>
+                    <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Disjonction" widthComputationExpression="10" heightComputationExpression="10">
+                      <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                      <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                      <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                      <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+                    </style>
+                  </subContainerMappings>
+                  <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" widthComputationExpression="10" heightComputationExpression="10">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                    <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+                  </style>
+                </subContainerMappings>
+                <subContainerMappings name="CondTransm" semanticCandidatesExpression="aql:self.conditionTrans" domainClass="game::Condition" childrenPresentation="HorizontalStack">
+                  <subContainerMappings name="Disjonctions" semanticCandidatesExpression="aql:self.disjonctions" domainClass="game::Disjonction" childrenPresentation="List">
+                    <subNodeMappings name="ConjonctionCon" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ConditionCon">
+                      <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.connaissance.name+' '+self.Negation" resizeKind="NSEW">
+                        <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                        <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                        <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                      </style>
+                    </subNodeMappings>
+                    <subNodeMappings name="ConjonctionObj" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ObjetPresent">
+                      <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.nbPoss+' '+self.objet.name" resizeKind="NSEW">
+                        <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                        <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                        <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                      </style>
+                    </subNodeMappings>
+                    <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Disjonction" widthComputationExpression="10" heightComputationExpression="10">
+                      <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                      <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                      <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                      <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+                    </style>
+                  </subContainerMappings>
+                  <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" widthComputationExpression="10" heightComputationExpression="10">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                    <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+                  </style>
+                </subContainerMappings>
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" widthComputationExpression="10" heightComputationExpression="10">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+                </style>
+              </subContainerMappings>
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" widthComputationExpression="30" heightComputationExpression="15">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
+              </style>
+            </subContainerMappings>
+            <subContainerMappings name="CondPersonneVisible" semanticCandidatesExpression="aql:self.conditionVisible" domainClass="game::Condition" childrenPresentation="HorizontalStack">
+              <subContainerMappings name="Disjonctions" semanticCandidatesExpression="aql:self.disjonctions" domainClass="game::Disjonction" childrenPresentation="List">
+                <subNodeMappings name="ConjonctionCon" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ConditionCon">
+                  <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.connaissance.name+' '+self.Negation" resizeKind="NSEW">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                  </style>
+                </subNodeMappings>
+                <subNodeMappings name="ConjonctionObj" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ObjetPresent">
+                  <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.nbPoss+' '+self.objet.name" resizeKind="NSEW">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                  </style>
+                </subNodeMappings>
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Disjonction" widthComputationExpression="10" heightComputationExpression="10">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+                </style>
+              </subContainerMappings>
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+              </style>
+            </subContainerMappings>
+            <subContainerMappings name="ObjetsConsoPersonne" semanticCandidatesExpression="aql:self" domainClass="game::Personne" childrenPresentation="List">
+              <subNodeMappings name="ObjetsConso" semanticCandidatesExpression="feature:objetsCons" domainClass="game::ObjetPresent">
+                <style xsi:type="style:LozengeNodeDescription" labelSize="12" labelExpression="aql:self.nbPoss+' '+self.objet.name" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                </style>
+              </subNodeMappings>
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Objets Consommés">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+              </style>
+            </subContainerMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.name+', obligatoire : '+self.Obligatoire" widthComputationExpression="10" heightComputationExpression="30">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_purple']"/>
+            </style>
+          </subContainerMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" widthComputationExpression="30" heightComputationExpression="30">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+          </style>
+        </containerMappings>
+        <toolSections name="Personnes">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer une personne dans un lieu" name="Creer_Personne" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Personne" referenceName="personnes"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer une condition sur la visibilité d'une personne&#xA;" name="Creer_Condition_Visible_Personne" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='CondPersonneVisible']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Condition" referenceName="conditionVisible"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer un objet present dans un lieu" name="Creer_Objet_Consomme" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@edgeMappings[name='EDObjetsConso']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::ObjetPresent" referenceName="objetsCons">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objet" valueExpression="[target/]"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objetsCons" valueExpression="aql:self.eInverse('objetsCons')"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer un choix pour une personne&#xA;" name="Creer_Choix" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Choix" referenceName="interaction"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer une condition sur un choix&#xA;&#xA;" name="Creer_Condition_Choix" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='CondChoix']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Condition" referenceName="condition"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer une action choisie pour un choix " name="Creer_Action_Choisie" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@edgeMappings[name='EDActionChoisie']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="actionChoisie" valueExpression="[target/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer une action pour un choix&#xA;" name="Creer_Action" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Action" referenceName="actions"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer une connaissance transmise par une action" name="Creer_Connaissance_Transmise_Action" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@edgeMappings[name='EDConTransmiseAction']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="connaissancesAtransmettre" valueExpression="[target/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer un objet transmis par une action" name="Creer_Objet_Transmis_Action" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@edgeMappings[name='EDObjetsTransmisAction']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::ObjetPresent" referenceName="objetsAtrans">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objet" valueExpression="[target/]"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objetsAtrans" valueExpression="aql:self.eInverse('objetsAtrans')"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer une condition sur les possessions du joueur pour une action&#xA;" name="Creer_Condition_Possede_Action" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']/@subContainerMappings[name='CondPossede']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Condition" referenceName="conditionPoss"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer une condition sur ce qui est transmis au joueur pour une action&#xA;" name="Creer_Condition_Transmet_Action" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@containerMappings[name='LieuInteraction']/@subContainerMappings[name='Personne']/@subContainerMappings[name='Choix']/@subContainerMappings[name='Action']/@subContainerMappings[name='CondPossede']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Condition" referenceName="conditionTrans"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer un choix precedent pour une action" name="Creer_Choix_Precedent" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Interactions']/@edgeMappings[name='EDChoixPrecedent']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="choixPrecedent" valueExpression="[target/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </additionalLayers>
+      <additionalLayers name="Territoires">
+        <edgeMappings name="Chemin" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='Lieu']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='Lieu']" targetFinderExpression="feature:successor" sourceFinderExpression="feature:predecessor" domainClass="game::Chemin" useDomainElement="true">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_green']"/>
+            <centerLabelStyleDescription labelSize="12" showIcon="false" labelExpression="feature:name">
+              <labelFormat>italic</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_green']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="EDConnaissanceChemin" documentation="connaissance transmise par le passage du chemin&#xA;" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@edgeMappings[name='Chemin']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Connaissance']" targetFinderExpression="feature:connaissancesTransmises">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="EDObjetsConso" documentation="objet consommé lors du passage par le chemin" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@edgeMappings[name='Chemin']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Objet']" targetFinderExpression="feature:objet" sourceFinderExpression="aql:self.eInverse('objetsCons')" domainClass="game::ObjetPresent" useDomainElement="true">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_red']"/>
+            <centerLabelStyleDescription labelSize="12" labelExpression="feature:nbPoss">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="EDObjetsTransm" documentation="objet transmis lors du passage par le chemin" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@edgeMappings[name='Chemin']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Objet']" targetFinderExpression="feature:objet" sourceFinderExpression="aql:self.eInverse('objetsTransmises')" domainClass="game::ObjetPresent" useDomainElement="true">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            <centerLabelStyleDescription labelSize="12" labelExpression="feature:nbPoss">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="EDConnaissanceLieu" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='Lieu']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Connaissance']">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="EDObjetsPresentsLieu" sourceMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='Lieu']" targetMapping="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@defaultLayer/@nodeMappings[name='Objet']" sourceFinderExpression="aql:self.eInverse('objetsPresents')" domainClass="game::ObjetPresent" useDomainElement="true">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_red']"/>
+            <centerLabelStyleDescription labelSize="12" labelExpression="feature:nbPoss">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="Lieu" semanticCandidatesExpression="aql:self.lieux" domainClass="game::Lieu" childrenPresentation="HorizontalStack">
+          <subContainerMappings name="PersonnesDuLieu" semanticCandidatesExpression="aql:self" domainClass="game::Lieu" childrenPresentation="List">
+            <subNodeMappings name="PersonneLieu" semanticCandidatesExpression="aql:self.personnes" domainClass="game::Personne">
+              <style xsi:type="style:SquareDescription" labelSize="12" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+              </style>
+            </subNodeMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Personnes" widthComputationExpression="10" heightComputationExpression="10">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_purple']"/>
+            </style>
+          </subContainerMappings>
+          <subContainerMappings name="ObjetsDuLieu" semanticCandidatesExpression="aql:self" domainClass="game::Lieu" childrenPresentation="List">
+            <subNodeMappings name="ObjetPresLieu" semanticCandidatesExpression="aql:self.objetsPresents" domainClass="game::ObjetPresent">
+              <style xsi:type="style:SquareDescription" labelSize="12" labelExpression="aql:self.nbPoss+' '+self.objet.name" labelPosition="node" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+              </style>
+            </subNodeMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Objets" widthComputationExpression="10" heightComputationExpression="10">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </style>
+          </subContainerMappings>
+          <subContainerMappings name="ConnaissancesDuLieu" semanticCandidatesExpression="aql:self" domainClass="game::Lieu" childrenPresentation="List">
+            <subNodeMappings name="ConnaissanceLieu" semanticCandidatesExpression="aql:self.connaissances" domainClass="game::Connaissance">
+              <style xsi:type="style:SquareDescription" labelSize="12" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+              </style>
+            </subNodeMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Connaissances" widthComputationExpression="10" heightComputationExpression="10">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+            </style>
+          </subContainerMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" widthComputationExpression="15" heightComputationExpression="15">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="CondChemin" semanticCandidatesExpression="aql:self.chemins" domainClass="game::Chemin" childrenPresentation="HorizontalStack">
+          <subContainerMappings name="ConditionVisible" semanticCandidatesExpression="aql:self.conditionVisible" domainClass="game::Condition" childrenPresentation="HorizontalStack">
+            <subContainerMappings name="Disjonctions" semanticCandidatesExpression="aql:self.disjonctions" domainClass="game::Disjonction" childrenPresentation="List">
+              <subNodeMappings name="ConjonctionCon" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ConditionCon">
+                <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.connaissance.name+' '+self.Negation" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                </style>
+              </subNodeMappings>
+              <subNodeMappings name="ConjonctionObj" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ObjetPresent">
+                <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.nbPoss+' '+self.objet.name" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                </style>
+              </subNodeMappings>
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Disjonction" widthComputationExpression="10" heightComputationExpression="10">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+              </style>
+            </subContainerMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" widthComputationExpression="20" heightComputationExpression="20">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+            </style>
+          </subContainerMappings>
+          <subContainerMappings name="ConditionOuvert" semanticCandidatesExpression="aql:self.conditionOuvert" domainClass="game::Condition" childrenPresentation="HorizontalStack">
+            <subContainerMappings name="Disjonctions" semanticCandidatesExpression="aql:self.disjonctions" domainClass="game::Disjonction" childrenPresentation="List">
+              <subNodeMappings name="ConjonctionCon" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ConditionCon">
+                <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.connaissance.name+' '+self.Negation" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                </style>
+              </subNodeMappings>
+              <subNodeMappings name="ConjonctionObj" semanticCandidatesExpression="aql:self.conjonctions" domainClass="game::ObjetPresent">
+                <style xsi:type="style:LozengeNodeDescription" labelSize="11" labelExpression="aql:self.nbPoss+' '+self.objet.name" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                </style>
+              </subNodeMappings>
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="Disjonction" widthComputationExpression="10" heightComputationExpression="10">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+              </style>
+            </subContainerMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" widthComputationExpression="20" heightComputationExpression="20">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_orange']"/>
+            </style>
+          </subContainerMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:'Condition(s) chemin '+self.name" widthComputationExpression="20" heightComputationExpression="20">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_green']"/>
+          </style>
+        </containerMappings>
+        <toolSections name="Lieux">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer un nouveau lieu&#xA;" name="Creer_Lieu" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='Lieu']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Lieu" referenceName="lieux"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" documentation="creer une personne dans un lieu" name="Creer_Personne" nodeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='Lieu']/@subContainerMappings[name='PersonnesDuLieu']/@subNodeMappings[name='PersonneLieu']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Personne" referenceName="personnes"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer une connaissance presente dans un lieu&#xA;" name="Creer_Connaissance_Presente" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@edgeMappings[name='EDConnaissanceLieu']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="connaissances" valueExpression="[target/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer un objet present dans un lieu" name="Creer_Objet_Present" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@edgeMappings[name='EDObjetsPresentsLieu']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::ObjetPresent" referenceName="objetsPresents">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objet" valueExpression="[target/]"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objetsPresents" valueExpression="aql:self.eInverse('objetsPresents')"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="Chemins">
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer un chemin entre deux lieux" name="Creer_Chemin" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@edgeMappings[name='Chemin']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.eContainer()/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Chemin" referenceName="chemins">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="predecessor" valueExpression="[source/]"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="successor" valueExpression="[target/]"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer une condition sur la visibilité d'un chemin" name="Creer_Condition_Visible" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='CondChemin']/@subContainerMappings[name='ConditionVisible']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Condition" referenceName="conditionVisible"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" documentation="creer une condition sur l'ouverture d'un chemin" name="Creer_Condition_Ouvert" containerMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@containerMappings[name='CondChemin']/@subContainerMappings[name='ConditionOuvert']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Condition" referenceName="conditionOuvert"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer une connaissance transmise par le passage d'un chemin" name="Creer_Connaissance_Transmise" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@edgeMappings[name='EDConnaissanceChemin']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::Connaissance" referenceName="connaissances">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="connaissancesTransmises" valueExpression="[target/]"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer un objet qui est consommé lors du passage par un chemin" name="Creer_Objet_Consomme" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@edgeMappings[name='EDObjetsConso']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::ObjetPresent" referenceName="objetsCons">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objet" valueExpression="[target/]"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objetsCons" valueExpression="aql:self.eInverse('objetsCons')"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" documentation="creer un objet qui est transmis au joueur lors du passage par un chemin&#xA;" name="Creer_Objet_Transmis" edgeMappings="//@ownedViewpoints[name='gameViewpoint']/@ownedRepresentations[name='GameDiagram']/@additionalLayers[name='Territoires']/@edgeMappings[name='EDObjetsTransm']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="game::ObjetPresent" referenceName="objetsTransmises">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objet" valueExpression="[target/]"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="objetsTransmises" valueExpression="aql:self.eInverse('objetsTransmises')"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </additionalLayers>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="fr.n7.game.projet.sirius.Services"/>
+  </ownedViewpoints>
+</description:Group>

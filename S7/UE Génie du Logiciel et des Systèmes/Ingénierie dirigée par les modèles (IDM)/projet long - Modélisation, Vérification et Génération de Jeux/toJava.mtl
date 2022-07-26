@@ -1,0 +1,610 @@
+[comment encoding = UTF-8 /]
+[module toJava('http://www.n7.fr/Game')]
+
+
+[template public jeuToJava(aJeu : Jeu)]
+[comment @main/]
+[file (aJeu.name + '.java', false, 'UTF-8')]
+import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
+import fr.n7.game.*;
+import fr.n7.game.impl.*;
+import fr.n7.game.GameFactory;
+import fr.n7.game.GamePackage;
+import org.eclipse.emf.common.util.*;
+public class [aJeu.name/] {
+ Jeu jeu;
+ Scanner myObj;
+public boolean estDansfins(){
+	boolean estfini=false;
+	for (  Lieu f  : this.jeu.getFins()){
+		if (  this.jeu.getExplorateur().getPosition()== f){
+			return true;
+		}
+	}
+	return false;
+}
+public boolean verifieCondition(Condition c) {
+	if (c==null){
+		return true;
+	} else {
+	boolean retour= false;
+	for (Disjonction d : c.getDisjonctions()) {
+		for (Conjonction conj: d.getConjonctions() ) {
+			retour=false;
+			if (conj instanceof ObjetPresent ) {
+				ObjetPresent objpres = (ObjetPresent) conj;
+				List<ObjetPresent> obexpl=  this.jeu.getExplorateur().getObjetsPossedes();
+				for (ObjetPresent oe : obexpl) {
+					
+					if (oe.getObjet().equals(objpres.getObjet())&& oe.getNbPoss()>=objpres.getNbPoss() && objpres.getNbPoss()>0) {
+						retour= true;
+						
+					}else if (objpres.getNbPoss()==0 && oe.getObjet().equals(objpres.getObjet()) && oe.getNbPoss()==objpres.getNbPoss()) {
+						retour=true;
+					}
+					
+				}
+				
+			} else {
+				ConditionCon condcon = (ConditionCon) conj;
+				List<Connaissance> conlist=  this.jeu.getExplorateur().getConnaissancesPossedees();
+				
+				for (Connaissance con : conlist) {
+				
+					if ((con.equals(condcon.getConnaissance())&& !condcon.isNegation())||(!con.equals(condcon.getConnaissance())&& condcon.isNegation()) ){
+						retour= true;
+						
+					} else if ((con.equals(condcon.getConnaissance())&& condcon.isNegation()) ){
+						retour=false;
+						break;
+					}
+					
+				}
+			}
+			if (retour==false) {
+					break;
+				}
+				
+		}
+		if (retour==true) {
+			return true;
+		}
+		retour=false;
+	}}
+	return false;
+}
+public void executerCheminObligatoire() {
+	for ( Chemin c : this.jeu.getChemins()){
+		
+		
+		if ( ( c.getPredecessor()==this.jeu.getExplorateur().getPosition()) && c.isObligatoire() && this.verifieCondition(c.getConditionOuvert()) && this.verifieCondition(c.getConditionVisible()) ){
+			
+			System.out.println("Position :"+this.jeu.getExplorateur().getPosition().getName());
+			System.out.println("Inventaire :");
+			for (ObjetPresent objpresJoueur : this.jeu.getExplorateur().getObjetsPossedes()){
+				System.out.println("Objet : "+objpresJoueur.getObjet().getName()+" "+objpresJoueur.getNbPoss());
+			}
+			for (Connaissance conJoueur : this.jeu.getExplorateur().getConnaissancesPossedees()){
+			System.out.println("Objet Connaissance: "+conJoueur.getName());
+			}
+			this.jeu.getExplorateur().getObjetsPossedes().addAll(c.getObjetsTransmises());
+			this.jeu.getExplorateur().getConnaissancesPossedees().addAll(c.getConnaissancesTransmises());
+			this.jeu.getExplorateur().setPosition(c.getSuccessor() );
+			System.out.println("On prends le chemin :"+c.getName());
+		}
+
+}
+}
+public void executeractionObligatoire(){
+	for ( Personne p : this.jeu.getExplorateur().getPosition().getPersonnes()){
+		
+		
+		if (p.isObligatoire() && this.verifieCondition(p.getConditionVisible())){
+			System.out.println("Position :"+this.jeu.getExplorateur().getPosition().getName());
+					System.out.println("Inventaire :");
+					for (ObjetPresent objpresJoueur : this.jeu.getExplorateur().getObjetsPossedes()){
+						System.out.println("Objet : "+objpresJoueur.getObjet().getName()+" "+objpresJoueur.getNbPoss());
+					}
+					for (Connaissance conJoueur : this.jeu.getExplorateur().getConnaissancesPossedees()){
+					System.out.println("Objet Connaissance: "+conJoueur.getName());
+					}
+			int i=0;
+			HashMap<Integer,Choix> lChoixPossible= new HashMap<Integer,Choix>();
+			//aficher interaction
+			for (Choix c : p.getInteraction()){
+				if (this.verifieCondition(c.getCondition())){
+					i++;
+					System.out.println(i+ " - " + c.getName());
+					lChoixPossible.put(i,c);
+				}
+			}
+			//choix interaction
+			System.out.println("Reponse: chiffre entre 0 et "+ i + "correspondant au numéro de la Question");
+		   	int idAction = Integer.parseInt(myObj.nextLine());
+			Choix c= lChoixPossible.get(idAction);
+			//afficher action possible
+			HashMap<Integer,Action> lAction= new HashMap<Integer,Action>();
+			for ( Action a : c.getActions()){
+				if ( verifieCondition(a.getConditionPoss())){
+					i++;
+					System.out.println(i+ " - " + a.getName());
+					lAction.put(i,a);
+				}
+			}	
+			//choix action
+			System.out.println("Reponse: chiffre entre 0 et "+ i + "correspondant au numéro de la Question");
+		   	 idAction = Integer.parseInt(myObj.nextLine());
+			Action a= lAction.get(idAction);
+			
+			
+			if ( this.verifieCondition(a.getConditionTrans())){
+				
+				
+				this.jeu.getExplorateur().getObjetsPossedes().addAll(a.getObjetsAtrans());
+				this.jeu.getExplorateur().getConnaissancesPossedees().addAll(a.getConnaissancesAtransmettre());
+			}
+			for (ObjetPresent opconspers : p.getObjetsCons() ) {
+				for (ObjetPresent  obJoeur: this.jeu.getExplorateur().getObjetsPossedes()) {
+					if (obJoeur.getObjet().getName().contentEquals(opconspers.getObjet().getName())) {
+						
+					this.jeu.getExplorateur().getObjetsPossedes().remove(obJoeur);
+					obJoeur.setNbPoss(obJoeur.getNbPoss()-opconspers.getNbPoss());
+					this.jeu.getExplorateur().getObjetsPossedes().add(obJoeur);
+					}
+					
+				}}
+
+			}
+		}
+
+	
+	for ( Chemin c : this.jeu.getChemins()){
+		
+		
+				if ( ( c.getPredecessor()==this.jeu.getExplorateur().getPosition()) && c.isObligatoire() && this.verifieCondition(c.getConditionOuvert()) && this.verifieCondition(c.getConditionVisible()) ){
+					
+					System.out.println("Position :"+this.jeu.getExplorateur().getPosition().getName());
+					System.out.println("Inventaire :");
+					for (ObjetPresent objpresJoueur : this.jeu.getExplorateur().getObjetsPossedes()){
+						System.out.println("Objet : "+objpresJoueur.getObjet().getName()+" "+objpresJoueur.getNbPoss());
+					}
+					for (Connaissance conJoueur : this.jeu.getExplorateur().getConnaissancesPossedees()){
+					System.out.println("Objet Connaissance: "+conJoueur.getName());
+					}
+					this.jeu.getExplorateur().getObjetsPossedes().addAll(c.getObjetsTransmises());
+					this.jeu.getExplorateur().getConnaissancesPossedees().addAll(c.getConnaissancesTransmises());
+					this.jeu.getExplorateur().setPosition(c.getSuccessor() );
+					System.out.println("On prends le chemin :"+c.getName());
+				}
+	}
+}
+
+public void jouer() {
+	this.myObj=new Scanner(System.in);
+	GamePackage packageInstancepdl = GamePackage.eINSTANCE;
+	GameFactory mF =GameFactory.eINSTANCE;
+	Jeu jeu=mF.createJeu();
+	jeu.setName("[aJeu.name/]");
+	Personne p;
+	Choix i;
+	Chemin chemin;
+	Objet o;
+	Connaissance c;
+	Condition cond;
+	Disjonction d;
+	ObjetPresent op;
+	ConditionCon cc;
+	Action action;
+	ObjetPresent objatr;
+	
+	[for (c: Connaissance | aJeu.connaissances)]
+	[c.connaissanceTojavaJeu()/]
+	[/for]
+	[for (o: Objet | aJeu.objets)]
+	[o.objetTojavaJeu()/]
+	[/for]
+	Lieu l= mF.createLieu();
+	[for (l: Lieu | aJeu.lieux)]
+	[l.lieuxTojava()/]
+	[/for]
+	Chemin ch;
+	[for (ch: Chemin | aJeu.chemins)]
+	[ch.cheminToJavaJeu()/]
+	[/for]
+	Joueur j= mF.createJoueur();
+	j.setName("[aJeu.explorateur.name/]");
+	[ for (op: ObjetPresent | aJeu.explorateur.objetsPossedes)]
+	[op.objetPresentToJava()/]
+	j.getObjetsPossedes().add(op);
+	[/for]
+	[ for (op: Connaissance | aJeu.explorateur.connaissancesPossedees)]
+	[op.connaissanceToJavaLieu()/]
+	j.getConnaissancesPossedees().add(con);
+	[/for]
+	for ( Lieu l2: jeu.getLieux()){
+
+		if ( l2.getName().contentEquals("[aJeu.explorateur.position.name/]")){
+			j.setPosition(l2);
+		}
+	}
+	j.setTailleLimite([aJeu.explorateur.tailleLimite/]);
+	jeu.setExplorateur(j);
+	for ( Lieu l2: jeu.getLieux()){
+		if ( l2.getName().contentEquals("[aJeu.depart.name/]")){
+			jeu.setDepart(l2);
+		}
+		[for (l : Lieu | aJeu.fins )]
+		if ( l2.getName().contentEquals("[l.name/]")){
+			jeu.getFins().add(l2);
+		}
+		[/for]
+	}
+	
+	
+this.jeu=jeu;
+	while(!this.estDansfins()){//tant que pas lieu de fins
+	//afficher position
+	System.out.println(this.jeu.getExplorateur().getPosition().getName());
+	//executé les actions obligatoire
+	Lieu positionAvant = this.jeu.getExplorateur().getPosition();
+	this.executeractionObligatoire();
+	
+	if (this.jeu.getExplorateur().getPosition()==positionAvant){
+	
+	boolean quitter=false;
+	
+	while (!quitter){
+	 positionAvant = this.jeu.getExplorateur().getPosition();
+	this.executerCheminObligatoire();
+	if (this.jeu.getExplorateur().getPosition()==positionAvant){
+	
+	System.out.println("Position :"+this.jeu.getExplorateur().getPosition().getName());
+					System.out.println("Inventaire :");
+					for (ObjetPresent objpresJoueur : this.jeu.getExplorateur().getObjetsPossedes()){
+						System.out.println("Objet : "+objpresJoueur.getObjet().getName()+" "+objpresJoueur.getNbPoss());
+					}
+					for (Connaissance conJoueur : this.jeu.getExplorateur().getConnaissancesPossedees()){
+					System.out.println("Objet Connaissance: "+conJoueur.getName());
+					}
+	//choix action
+	int k=0;
+	//regarder si on peut interagir avec des gens
+	HashMap<Integer,String> possibilites = new HashMap<Integer,String>();
+	HashMap<Integer,Personne> personnesDisponibles= new HashMap<Integer,Personne>();
+	int indice=0;
+	for ( Personne p2 : this.jeu.getExplorateur().getPosition().getPersonnes()){
+		if (this.verifieCondition(p.getConditionVisible())){
+			indice+=1;
+			personnesDisponibles.put(indice,p2);
+		} 	
+	}
+	if ( personnesDisponibles.size()>0){
+		k++;
+		System.out.println(k+" - personnes");
+		possibilites.put(k,"personnes");
+	}
+	// regarder si on peut prendre des objets
+	HashMap<Integer,ObjetPresent> objpreslist=new HashMap<Integer,ObjetPresent>();
+	indice=0;
+	for ( ObjetPresent opJ:  this.jeu.getExplorateur().getPosition().getObjetsPresents()){
+		indice+=1;
+		objpreslist.put(indice,opJ);
+	}
+	if (indice>0) {
+		k+=1;
+		possibilites.put(k,"Objet");
+		System.out.println(k+" - Objet");
+	}
+	// regarder si il y des chemins disponible
+	HashMap<Integer,Chemin> cheminlist= new HashMap<Integer,Chemin>();
+	indice=0;
+	for (Chemin cheminJ : jeu.getChemins()){
+		if((cheminJ.getPredecessor().equals(this.jeu.getExplorateur().getPosition()) && verifieCondition(cheminJ.getConditionOuvert()) && verifieCondition(cheminJ.getConditionVisible()))){
+			indice++;
+			cheminlist.put(indice,cheminJ);
+		}
+	}
+	if (indice>0) {
+		k+=1;
+		possibilites.put(k,"Chemins");
+		System.out.println(k+" -Chemins");
+	}
+	
+	//choix de categorie
+	System.out.println("Reponse: chiffre entre 0 et "+ k + "correspondant au numéro de la categorie");
+	int idAction = Integer.parseInt(myObj.nextLine());
+	//Afficher la sous categorie correspondante
+	String categorie=possibilites.get(idAction);
+	if (categorie.contentEquals("Chemins")){
+		for (Integer chkey : cheminlist.keySet()){
+			System.out.println(chkey+ " - " + cheminlist.get(chkey).getName());
+			System.out.println("Reponse: chiffre entre 0 et "+ cheminlist.size() + "correspondant au numéro du chemin");
+			
+		}
+		idAction = Integer.parseInt(myObj.nextLine());
+		this.jeu.getExplorateur().setPosition(cheminlist.get(idAction).getSuccessor());
+		quitter=true;
+	} else if(categorie.contentEquals("Objet")) {
+		for (Integer  okey : objpreslist.keySet()){
+			System.out.println(okey+ " - " + objpreslist.get(okey).getObjet().getName());
+		}	
+			System.out.println("Reponse: chiffre entre 0 et "+ objpreslist.size() + "correspondant au numéro de l'objet");
+			idAction = Integer.parseInt(myObj.nextLine());
+			this.jeu.getExplorateur().getObjetsPossedes().add(objpreslist.get(idAction));
+	} else if (categorie.contentEquals("personnes")){
+		for (Integer  okey : personnesDisponibles.keySet()){
+			System.out.println(okey+ " - " + personnesDisponibles.get(okey).getName());	
+		}
+		System.out.println("Reponse: chiffre entre 0 et "+ personnesDisponibles.size() + "correspondant au numéro de la personnes");
+		idAction = Integer.parseInt(myObj.nextLine());
+		 p = personnesDisponibles.get(idAction);
+		indice=0;
+			HashMap<Integer,Choix> lChoixPossible= new HashMap<Integer,Choix>();
+			//aficher interaction
+			for (Choix cJ : p.getInteraction()){
+				if (this.verifieCondition(cJ.getCondition())){
+					indice++;
+					System.out.println(indice+ " - " + cJ.getName());
+					lChoixPossible.put(indice,cJ);
+				}
+			}
+			//choix interaction
+			System.out.println("Reponse: chiffre entre 0 et "+ indice + "correspondant au numéro de la Question");
+		   	idAction = Integer.parseInt(myObj.nextLine());
+			Choix cJ= lChoixPossible.get(idAction);
+			//afficher action possible
+			HashMap<Integer,Action> lAction= new HashMap<Integer,Action>();
+			for ( Action a : cJ.getActions()){
+				if ( verifieCondition(a.getConditionPoss())){
+					indice++;
+					System.out.println(indice+ " - " + a.getName());
+					lAction.put(indice,a);
+				}
+			}	
+			//choix action
+			System.out.println("Reponse: chiffre entre 0 et "+ indice + "correspondant au numéro de la Question");
+		   	 idAction = Integer.parseInt(myObj.nextLine());
+			Action a= lAction.get(idAction);
+			if ( this.verifieCondition(a.getConditionTrans())){
+				
+				this.jeu.getExplorateur().getObjetsPossedes().addAll(a.getObjetsAtrans());
+				this.jeu.getExplorateur().getConnaissancesPossedees().addAll(a.getConnaissancesAtransmettre());
+			}
+			for (ObjetPresent opconspers : p.getObjetsCons() ) {
+				for (ObjetPresent  obJoeur: this.jeu.getExplorateur().getObjetsPossedes()) {
+					if (obJoeur.getObjet().getName().contentEquals(opconspers.getObjet().getName())) {
+						System.out.println("o2");
+					this.jeu.getExplorateur().getObjetsPossedes().remove(obJoeur);
+					obJoeur.setNbPoss(obJoeur.getNbPoss()-opconspers.getNbPoss());
+					this.jeu.getExplorateur().getObjetsPossedes().add(obJoeur);
+					}
+					
+				}}
+
+			
+
+			}else {
+			System.out.println("Mauvais choix reesayer");
+		}
+	}
+	else {
+		quitter=true;
+	}}
+	}}
+	System.out.println("jeu terminé :"+ this.jeu.getExplorateur().getPosition().getName());
+}
+public static void main(String  args) {
+	enigme e= new enigme();
+	e.jouer();
+	
+}
+}
+[/file]
+
+[/template]
+
+[query public getOP(d: Disjonction) : OrderedSet(ObjetPresent) =
+   d.conjonctions->select( e | e.oclIsTypeOf(ObjetPresent) )
+      ->collect( e | e.oclAsType(ObjetPresent) )
+      ->asOrderedSet()
+/]
+
+[query public getCC(d: Disjonction) : OrderedSet(ConditionCon) =
+   d.conjonctions->select( e | e.oclIsTypeOf(ConditionCon) )
+      ->collect( e | e.oclAsType(ConditionCon) )
+      ->asOrderedSet()
+/]
+
+[template public personneTojava(p: Personne) post (trim())]
+	
+p=mF.createPersonne();
+p.setName("[p.name/]");
+p.setObligatoire([p.Obligatoire/]);
+[if p.objetsCons <> null]
+
+	[for (op: ObjetPresent | p.objetsCons) ]
+	[p.objetsCons.objetPresentToJava()/]
+	p.getObjetsCons().add(op);
+	[/for]
+[/if]
+
+[if p.conditionVisible.oclIsUndefined()._not()]
+	
+	[for (cv: Condition | p.conditionVisible)]
+	[p.conditionVisible.conditionToJava()/]
+	p.setConditionVisible(cond);
+	[/for]
+[/if]
+
+
+[for (i : Choix | p.interaction)]
+	[i.choixToJava()/]
+[/for]
+l.getPersonnes().add(p);
+[/template]
+
+[template public lieuxTojava(l: Lieu) post (trim())]
+l=mF.createLieu();
+l.setName("[l.name/]");	
+
+[for (p: Personne | l.personnes) separator(' \n') ]
+	
+	[p.personneTojava()/]
+[/for]
+[for (op: ObjetPresent | l.objetsPresents)]
+	[op.objetPresentToJava()/]
+	l.getObjetPresents().add(op);
+[/for]
+[for (con: Connaissance | l.connaissances)]
+	[con.connaissanceToJavaLieu()/]
+	l.getConnaissances().add(con);
+[/for]
+
+jeu.getLieux().add(l);	
+[/template]
+
+[template public objetTojavaJeu(o: Objet) post (trim())]
+	o=mF.createObjet();
+	o.setName("[o.name/]");
+	o.setTaille([o.taille/]);
+	o.setQuantite([o.quantite/]);
+	jeu.getObjets().add(o);
+[/template]
+[template public disjonctionTojava(d: Disjonction) post (trim())]
+	d=mF.createDisjonction();
+	[for (op: ObjetPresent | d.getOP()) separator(' \n')]
+		[op.objetPresentToJava()/]
+		d.getConjonctions().add(op);			
+	[/for]	
+	[for( cc: ConditionCon | d.getCC())]
+		[cc.conditionConTojava()/]
+		d.getConjonctions().add(cc);
+	[/for]
+[/template]
+
+[template public objetPresentToJava(op: ObjetPresent) post (trim())]
+			
+ op= mF.createObjetPresent();
+for(Objet oJ: jeu.getObjets()){
+		if(oJ.getName().contentEquals("[op.objet.name/]")){
+		op.setObjet(oJ);
+		}
+}
+op.setNbPoss([op.nbPoss/]);
+[/template ]
+[template public conditionConTojava(cc: ConditionCon) post (trim())]
+
+	cc=mF.createConditionCon();
+	
+	for( Connaissance conjeu : jeu.getConnaissances()){
+		if (conjeu.getName().contentEquals("[cc.connaissance.name/]")){
+			cc.setConnaissance(conjeu);
+		}
+	}
+	cc.setNegation([cc.Negation/]);
+		
+
+[/template]
+[template public choixToJava(i: Choix) post (trim())]
+	i=mF.createChoix();
+	i.setName("[i.name/]");
+	
+	[for( action: Action | i.actions)]
+		action=mF.createAction();
+		action.setName("[action.name/]");
+		action.setChoixPrecedent(i);
+		action.setValeur("[action.valeur/]");
+		
+		[for (objatr: ObjetPresent |action.objetsAtrans) ]
+		objatr=mF.createObjetPresent();
+		for( Object  oJ :  jeu.objects){
+			if(oJ.getName().contentEquals("[objatr.objet.name/]"){
+				objatr.setObjet(oJ);
+			}
+		}
+		objatr.setNbPoss([objatr.nbPoss/]
+		action.getObjetsAtrans().add(objtr);
+		[/for]
+		[for (conatr: Connaissance | action.connaissancesAtransmettre)]
+		for ( Connaissance conJ :jeu.getConnaissances()){
+			if ( conJ.getName().contentEquals("[conatr.name/]")){
+				action.getConnaissancesAtransmettre().add(conJ);
+			}
+		}
+		[/for]
+		[if action.conditionPoss.oclIsUndefined()._not()]
+		[action.conditionPoss.conditionToJava()/]
+		action.setConditionPoss(cond);
+		[/if]
+		[if action.conditionTrans.oclIsUndefined()._not()]
+		[action.conditionTrans.conditionToJava()/]
+		[/if]
+		action.setConditionTrans(cond);
+		
+		i.getActions().add(action);
+	[/for]
+	p.getInteraction().add(i);
+[/template]
+[template public conditionToJava(cond: Condition) post (trim())]
+	cond = mF.createCondition();
+	cond.setName("[cond.name/]");
+	
+	[for ( d: Disjonction |  cond.disjonctions) ]
+		[d.disjonctionTojava()/]
+		cond.getDisjonctions().add(d);
+	[/for]
+
+	
+[/template]
+[template public connaissanceToJavaLieu(con: Connaissance) post (trim())]
+			
+
+for (c: Connaissance in jeu.getConnaissances()) {
+	if(c.getName().contentEquals("[con.name/]")){
+		con=c;
+	}
+}
+		
+[/template ]
+[template public connaissanceTojavaJeu(con: Connaissance) post (trim())]
+c=mF.createConnaissance();
+c.setName("[con.name/]");
+c.setValeur([con.valeur/]);
+jeu.getConnaissances().add(c);
+[/template]
+[template public cheminToJavaJeu(ch: Chemin) post (trim())]
+ch=mF.createChemin();
+ch.setName("[ch.name/]");
+
+for (Lieu lJ: jeu.getLieux()) {
+	if(lJ.getName().contentEquals("[ch.successor.name/]")){
+		ch.setSuccessor(lJ);
+	} else if ( lJ.getName().contentEquals("[ch.predecessor.name/]")){
+		ch.setPredecessor(lJ);
+	}
+}
+[for (obp: ObjetPresent | ch.objetsTransmises)]
+[obp.objetPresentToJava()/]
+ch.getObjetsTransmises().add(op);
+[/for]
+[for (c: Connaissance | ch.connaissancesTransmises)]
+[c.connaissanceToJavaLieu()/]
+ch.add(con);
+[/for]
+[for (obp: ObjetPresent | ch.objetsCons)]
+[obp.objetPresentToJava()/]
+ch.getObjetsCons().add(op);
+[/for]
+[if ch.conditionVisible.oclIsUndefined()._not()]
+[ch.conditionVisible.conditionToJava()/]
+ch.setConditionVisible(cond);
+[/if]
+[if ch.conditionOuvert.oclIsUndefined()._not()]
+[ch.conditionOuvert.conditionToJava()/]
+ch.setConditionOuvert(cond);
+[/if]
+ch.setObligatoire([ch.Obligatoire/]);
+jeu.getChemins().add(ch);
+[/template]

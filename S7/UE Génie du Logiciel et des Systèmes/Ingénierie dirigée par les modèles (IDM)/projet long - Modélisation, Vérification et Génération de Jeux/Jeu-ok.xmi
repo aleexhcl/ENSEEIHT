@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game:Jeu xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:game="http://www.n7.fr/Game"
+    xsi:schemaLocation="http://www.n7.fr/Game Game.ecore"
+    depart="//@lieux.0"
+    fins="//@lieux.1">
+  <connaissances
+      name="c1"/>
+  <connaissances
+      name="c2"/>
+  <objets name="o1"
+      taille="1"
+      quantite="3"/>
+  <objets name="o2"
+      taille="2"
+      quantite="1"/>
+  <lieux name="l1">
+    <objetsPresents
+        objet="//@objets.1"
+        nbPoss="1"/>
+  </lieux>
+  <lieux name="l2">
+    <personnes
+        name="p1"
+        Obligatoire="true">
+      <interaction
+          name="choix1">
+        <actions
+            name="action1"
+            connaissancesAtransmettre="//@connaissances.0"/>
+        <actions
+            name="action2"
+            connaissancesAtransmettre="//@connaissances.1"/>
+      </interaction>
+      <interaction
+          name="choix2"/>
+    </personnes>
+    <personnes
+        name="p2"/>
+  </lieux>
+  <chemins name="ch12"
+      predecessor="//@lieux.0"
+      successor="//@lieux.1"/>
+  <explorateur
+      name="j1"
+      position="//@lieux.0"
+      tailleLimite="10">
+    <objetsPossedes
+        objet="//@objets.0"
+        nbPoss="2"/>
+    <objetsPossedes
+        objet="//@objets.1"
+        nbPoss="1"/>
+  </explorateur>
+</game:Jeu>

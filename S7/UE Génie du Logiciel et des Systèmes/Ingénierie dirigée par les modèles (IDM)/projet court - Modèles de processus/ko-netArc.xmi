@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<petrinet:ReseauPetri
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:petrinet="http://petrinet"
+    name="ArcErrors">
+  <petriElements
+      xsi:type="petrinet:Transition"
+      linksToSuccessors="//@petriElements.1"
+      linksToPredecessors="//@petriElements.1"
+      name="t1"/>
+  <petriElements
+      xsi:type="petrinet:Arc"
+      predecessor="//@petriElements.0"
+      successor="//@petriElements.0"
+      nbJetons="1"/>
+  <petriElements
+      xsi:type="petrinet:Place"
+      linksToSuccessors="//@petriElements.4"
+      name="p1"/>
+  <petriElements
+      xsi:type="petrinet:Place"
+      linksToPredecessors="//@petriElements.4"
+      name="p2"/>
+  <petriElements
+      xsi:type="petrinet:Arc"
+      predecessor="//@petriElements.2"
+      successor="//@petriElements.3"
+      nbJetons="1"/>
+  <petriElements
+      xsi:type="petrinet:Transition"
+      linksToSuccessors="//@petriElements.6"
+      name="transition2"/>
+  <petriElements
+      xsi:type="petrinet:ReadArc"
+      predecessor="//@petriElements.5"
+      successor="//@petriElements.7"/>
+  <petriElements
+      xsi:type="petrinet:Place"
+      linksToPredecessors="//@petriElements.6"
+      name="place3"/>
+</petrinet:ReseauPetri>

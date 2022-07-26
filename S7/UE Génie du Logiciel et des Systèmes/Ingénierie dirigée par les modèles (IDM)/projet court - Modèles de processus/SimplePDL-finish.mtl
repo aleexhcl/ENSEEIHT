@@ -1,0 +1,23 @@
+[comment encoding = UTF-8 /]
+[module SimplePDL-finish('http://simplepdl')]
+
+
+[template public SimplePDL-finish(aProcess : Process)]
+[comment @main/]
+[file (aProcess.name + '.LTLterm.ltl', false, 'UTF-8')]
+[let wds : OrderedSet(WorkDefinition) = aProcess.getWorkDefinitions()]
+op process_fini = [for (wd : WorkDefinition | wds)][if wds->indexOf(wd) = 1][wd.name + '_finished' /][else] /\ [wd.name + '_finished' /][/if][/for];
+
+['[]'/] <> dead ;
+['[]'/] (dead => process_fini);
+- <> process_fini; 
+
+[/let]
+[/file]
+[/template]
+
+[query public getWorkDefinitions(p : Process) : OrderedSet(WorkDefinition) = 
+	p.processElements->select( e | e.oclIsTypeOf(WorkDefinition) )
+		->collect( e | e.oclAsType(WorkDefinition) )
+		->asOrderedSet()
+/]

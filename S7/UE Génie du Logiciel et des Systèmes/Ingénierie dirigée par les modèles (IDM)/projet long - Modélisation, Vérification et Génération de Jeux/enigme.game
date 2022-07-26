@@ -1,0 +1,37 @@
+enigmeSphinx {
+
+	connaissance Reussite contenu ""
+	
+	objet Tentative taille 1 quantite 3
+		
+	lieu Enigme personnesPresentes { personne Sphinx
+		propose { enigme listeActions { action bonneRep "bonneRep" connaissancesAtransmettre { Reussite }
+									    action mauvaiseRep "mauvaiseRep"
+						}
+		}
+		visible conditionVisibleSphinx condition avoirTentative estUn Tentative quantitePossedee 1 et Reussite
+		obligatoire
+		consomme { estUn Tentative quantitePossedee 1 }
+	}
+
+	lieu Succes
+	
+	lieu Echec
+	
+	chemin succes reliant Enigme à Succes  
+	visible conditionVisibleSucces condition avoirReussite Reussite
+	obligatoire
+	
+	chemin echec reliant Enigme à Echec 
+	visible conditionVisibleEchec condition plusDeTentative estUn Tentative quantitePossedee 0
+	obligatoire
+	
+	joueur explorateur 
+		objetsPossedes { estUn Tentative quantitePossedee 3 }
+		position Enigme
+		tailleLimite 3
+		
+	depart Enigme
+	
+	fin Succes Echec
+}

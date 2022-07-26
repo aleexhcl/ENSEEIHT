@@ -1,0 +1,3 @@
+model S {
+    block Justin (joe : in int);
+}

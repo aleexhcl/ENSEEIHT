@@ -1,0 +1,15 @@
+\* Problem: Fabrication Voitures *\
+
+Maximize
+ Benefice: + 10000 L + 9000 S
+
+Subject To
+ HeureTravail: + 0.06 L + 0.05 S <= 60
+ Parking: + 10 L + 20 S <= 1500
+ LimiteDemande: L <= 800
+
+Integer
+ L
+ S
+
+End

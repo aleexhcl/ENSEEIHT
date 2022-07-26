@@ -1,0 +1,3 @@
+package pack; 
+
+public enum Temperament { COLERIQUE, SANGUIN, FLEGMATIQUE, MELANCOLIQUE, DYNAMIQUE, CALME, SOLAIRE }

@@ -1,0 +1,71 @@
+enigmeSphinxDragon {
+
+	connaissance Reussite contenu ""
+	
+	connaissance Mort contenu ""
+	
+	objet Tentative taille 1 quantite 3
+	
+	objet epe taille 1 quantite 1 
+	
+	objet cle taille 1 quantite 1 
+	
+		
+	lieu EnigmeDefi personnesPresentes { personne Sphinx
+		propose { enigme listeActions { action bonneRep "bonneRep" connaissancesAtransmettre { Reussite }
+									    action mauvaiseRep "mauvaiseRep"
+						}
+		}
+		visible conditionVisibleSphinx condition avoirTentative estUn Tentative quantitePossedee 1 et Reussite
+		
+		consomme { estUn Tentative quantitePossedee 1 }
+	;
+	 personne maitre
+		propose { defi listeActions { action gagne "gagne" objetsAtransmettre { estUn epe quantitePossedee 1 }
+									    action perd "perd"
+						}
+		}
+		visible conditionVisibleSphinx condition avoirTentative estUn Tentative quantitePossedee 1 et Reussite
+		
+		consomme { estUn Tentative quantitePossedee 1 }
+	}
+    lieu MaisonDragon personnesPresentes { personne dragon
+		propose { bataille listeActions { action egorgerDragon "" objetsAtransmettre { estUn cle quantitePossedee 1 }
+			                             possibleSi battreDRagon condition avoirEpe estUn epe quantitePossedee 1
+									    action mourrir "" connaissancesAtransmettre { Mort }
+						}
+		}
+		visible conditionVisibleDragon condition etreVivant Negation Mort
+		obligatoire
+		
+	}
+	lieu Succes
+	
+	lieu Echec
+	
+	chemin succes reliant EnigmeDefi à Succes  
+	visible conditionVisibleSucces condition avoirReussite Reussite
+	obligatoire
+	
+	chemin echec reliant EnigmeDefi à Echec 
+	visible conditionVisibleEchec condition plusDeTentative estUn Tentative quantitePossedee 0
+	obligatoire
+	
+	chemin versDragon reliant EnigmeDefi à MaisonDragon
+	
+	chemin JoueurBattu reliant MaisonDragon à Echec
+	visible conditionEchec condition etreMort Mort
+	obligatoire
+	
+	chemin DragonBattu reliant MaisonDragon à Succes
+	visible conditionBattre condition etreVivant Negation Mort 
+	
+	joueur explorateur 
+		objetsPossedes { estUn Tentative quantitePossedee 3 }
+		position EnigmeDefi
+		tailleLimite 4
+		
+	depart EnigmeDefi
+	
+	fin Succes Echec
+}

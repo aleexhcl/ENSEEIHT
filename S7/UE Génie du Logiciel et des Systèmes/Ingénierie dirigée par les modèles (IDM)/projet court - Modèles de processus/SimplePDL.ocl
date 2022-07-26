@@ -1,0 +1,48 @@
+import 'SimplePDL.ecore'
+
+package simplepdl
+
+context Process
+inv warningSeverity: false
+inv withMessage('Explicit message in process ' + self.name + ' (withMessage)'): false
+inv errorSeverity: null
+
+context Process
+inv validName('Invalid name: ' + self.name):
+	self.name.matches('[A-Za-z_][A-Za-z0-9_]*')
+
+context ProcessElement
+def: process(): Process =
+	Process.allInstances()
+		->select(p | p.processElements->includes(self))
+		->asSequence()->first()
+
+context WorkSequence
+inv successorAndPredecessorInSameProcess('Activities not in the same process : '
+		+ self.predecessor.name + ' in ' + self.predecessor.process().name+ ' and '
+		+ self.successor.name + ' in ' + self.successor.process().name
+):
+	self.process() = self.successor.process()
+	and self.process() = self.predecessor.process()
+inv notReflexive('activite reflexive'): self.successor<>self.predecessor
+	
+context WorkDefinition
+inv differentName('activites de meme nom : ' + self.name): self.process().processElements
+	->select(p| p. oclIsKindOf(WorkDefinition))
+	->collect(p|p.oclAsType(WorkDefinition))
+	->select(p|p.name=self.name)->size() = 1
+inv mauvaisNom('nom trop court'): self.name.size() > 2
+inv validName('Invalid name: ' + self.name):
+	self.name.matches('[A-Za-z_][A-Za-z0-9_]*')
+	
+context Ressource
+inv differentName('ressources de meme nom : ' + self.name): self.process().processElements
+	->select(p| p. oclIsKindOf(Ressource))
+	->collect(p|p.oclAsType(Ressource))
+	->select(p|p.name=self.name)->size() = 1
+inv quantitePositive('pas de quantite de la ressource' + self.name): self.quantite > 0
+
+context RessourcesNecessaires
+inv quantitePositive('pas de quantite de la ressource necessaire'): self.nb >= 0
+inv quantiteMax('plus de ressources necessaires que de quantite disponible'): self.nb<=self.ressourceutilise.quantite
+endpackage

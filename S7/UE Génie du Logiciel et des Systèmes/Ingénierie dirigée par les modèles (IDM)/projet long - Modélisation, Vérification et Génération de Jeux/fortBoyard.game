@@ -1,0 +1,59 @@
+fortBoyard {
+
+	connaissance indice1 contenu ""
+	connaissance indice2 contenu ""
+	connaissance allerPrison contenu ""
+	connaissance liberte contenu ""
+	
+	objet Tentative taille 1 quantite 3
+	objet UniteTemps taille 1 quantite 2
+		
+	lieu Defi personnesPresentes { personne MrBoo
+		propose { Lutte listeActions { action gagner "" connaissancesAtransmettre { indice1 }
+									    action perdre ""
+						}
+		}
+		
+		obligatoire
+		
+	}
+    lieu Jugement personnesPresentes { personne Maitre
+		propose { jugement listeActions { action gagner "" connaissancesAtransmettre { indice2 }
+									    action perdre "" connaissancesAtransmettre { allerPrison } }
+						  apparaitSi conditionJugement condition etreLibre1 Negation allerPrison ou etreLibre2 liberte
+						  
+				 TentativeLiberte listeActions { action gagner "" connaissancesAtransmettre { liberte }
+									    action perdre ""  }
+						  apparaitSi conditionJugement condition etreLibre allerPrison 
+						
+		}
+		
+		obligatoire
+		consomme { estUn Tentative quantitePossedee 1 }
+	}
+	lieu Or
+	
+	lieu Echec
+	
+	chemin versJugement reliant Defi à Jugement 
+	objetsConsommes { estUn UniteTemps quantitePossedee 1}
+	obligatoire
+	
+	chemin versOr reliant Jugement à Or 
+	objetsConsommes { estUn UniteTemps quantitePossedee 1}
+	visible conditionVisibleOr condition pouvoirAllerOr estUn UniteTemps quantitePossedee 1 et indice1 et indice2
+	obligatoire
+	
+	chemin versEchec reliant Jugement à Echec 
+	visible conditionVisibleEchec condition PasIndice1 Negation indice1 ou PasIndice2 Negation indice2 et estUn Tentative quantitePossedee 0 ou TempsTermine estUn UniteTemps quantitePossedee 0 
+	obligatoire
+	
+	joueur explorateur 
+		objetsPossedes { estUn Tentative quantitePossedee 3 ;estUn UniteTemps quantitePossedee 2 }
+		position Defi
+		tailleLimite 3
+		
+	depart Defi
+	
+	fin Or Echec
+}

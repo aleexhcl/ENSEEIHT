@@ -1,0 +1,8 @@
+tr t0 [0,w[ X*5 -> Y*3 X*2
+tr t2 [0,w[ Y*5 -> X*5
+tr t4 [0,w[ Y?9 -> Z
+tr t1 [0,w[ X*2 Y -> Y*3
+pl X (4)
+pl Y (2)
+net fig1
+

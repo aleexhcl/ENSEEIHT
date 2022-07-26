@@ -1,0 +1,28 @@
+net pdlSujet
+		pl RedactionDoc_ready (1)
+		pl RedactionDoc_started (0)
+		pl RedactionDoc_finished (0)
+		pl Conception_ready (1)
+		pl Conception_started (0)
+		pl Conception_finished (0)
+		pl Programmation_ready (1)
+		pl Programmation_started (0)
+		pl Programmation_finished (0)
+		pl RedactionTests_ready (1)
+		pl RedactionTests_started (0)
+		pl RedactionTests_finished (0)
+		pl ConceptionstartToStartRedactionTests (0)
+		pl ProgrammationfinishToFinishRedactionTests (0)
+		pl ConceptionfinishToStartProgrammation (0)
+		pl ConceptionfinishToFinishRedactionDoc (0)
+		pl ConceptionstartToStartRedactionDoc (0)
+		tr RedactionDoc_start   RedactionDoc_ready      ConceptionstartToStartRedactionDoc   ?1   -> RedactionDoc_started
+		tr RedactionDoc_finish   RedactionDoc_started      ConceptionfinishToFinishRedactionDoc   ?1   -> RedactionDoc_finished
+		tr Conception_start   Conception_ready      -> Conception_started ConceptionstartToStartRedactionTests ConceptionstartToStartRedactionDoc
+		tr Conception_finish   Conception_started      -> Conception_finished ConceptionfinishToStartProgrammation ConceptionfinishToFinishRedactionDoc
+		tr Programmation_start   Programmation_ready      ConceptionfinishToStartProgrammation   ?1   -> Programmation_started
+		tr Programmation_finish   Programmation_started      -> Programmation_finished ProgrammationfinishToFinishRedactionTests
+		tr RedactionTests_start   RedactionTests_ready      ConceptionstartToStartRedactionTests   ?1   -> RedactionTests_started
+		tr RedactionTests_finish   RedactionTests_started      ProgrammationfinishToFinishRedactionTests   ?1   -> RedactionTests_finished
+
+

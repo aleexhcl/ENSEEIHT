@@ -1,0 +1,6 @@
+op process_fini = RedactionDoc_finished /\ Conception_finished /\ Programmation_finished /\ RedactionTests_finished;
+
+[] <> dead ;
+[] (dead => process_fini);
+- <> process_fini; 
+

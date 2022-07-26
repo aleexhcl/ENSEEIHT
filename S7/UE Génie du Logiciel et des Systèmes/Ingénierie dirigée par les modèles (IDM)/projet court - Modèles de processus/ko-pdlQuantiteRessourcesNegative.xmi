@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simplepdl:Process
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:simplepdl="http://simplepdl"
+    name="ProcessRessourcesNegatives">
+  <processElements
+      xsi:type="simplepdl:Ressource"
+      name="RessourceNegative"
+      quantite="-10"/>
+  <processElements
+      xsi:type="simplepdl:WorkDefinition"
+      name="test">
+    <linkToRessources
+        nb="-3"
+        ressourceutilise="//@processElements.0"
+        ressourcePredecessor="//@processElements.1"/>
+  </processElements>
+</simplepdl:Process>

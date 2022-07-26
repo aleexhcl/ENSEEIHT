@@ -1,0 +1,49 @@
+[comment encoding = UTF-8 /]
+[module PetriNet2Tina('http://petrinet')]
+
+
+[template public reseauToTina(aReseauPetri : ReseauPetri)]
+[comment @main/]
+[file (aReseauPetri.name + '.net', false, 'UTF-8')]
+
+['net ' + aReseauPetri.name/]
+[let places : OrderedSet(Place) = aReseauPetri.getPlaces() ]
+[if (places->size() > 0)]
+		[for (p : Place | places)]
+		['pl ' + p.name + ' (' + p.nbJetons + ')'/]
+		[/for]
+	[else]
+	[/if]
+[/let]
+[let transitions : OrderedSet(Transition) = aReseauPetri.getTransitions()]
+	[if (transitions->size() > 0)]
+		[for (t : Transition | transitions)]
+		[t.totina()/]
+		[/for]
+	[else]
+	[/if]
+[/let]
+
+
+[/file]
+[/template]
+
+[query public getPlaces(r: ReseauPetri) : OrderedSet(Place) = 
+	r.petriElements->select( e | e.oclIsTypeOf(Place) )
+		->collect( e | e.oclAsType(Place) )
+		->asOrderedSet()
+/]
+
+[query public getTransitions(r: ReseauPetri) : OrderedSet(Transition) = 
+	r.petriElements->select( e | e.oclIsTypeOf(Transition) )
+		->collect( e | e.oclAsType(Transition) )
+		->asOrderedSet()
+/]
+
+[template public totina(t : Transition) post (trim()) ]
+
+['tr ' + t.name + ' '/] [for (arc: Arc | t.linksToPredecessors)] [arc.predecessor.name +' '/] [if (arc.oclIsTypeOf(ReadArc))] ['?' + arc.nbJetons/] [else] [if (arc.nbJetons > 1)] ['*' + arc.nbJetons/] [/if] [/if] [/for][' -> '/][for (arc: Arc | t.linksToSuccessors)] [arc.successor.name+' ' /] [if (arc.nbJetons > 1)] ['*' + arc.nbJetons/]
+	[/if]
+[/for]
+	
+[/template]

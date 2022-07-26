@@ -1,0 +1,26 @@
+[comment encoding = UTF-8 /]
+[module game2ltl('http://www.n7.fr/Game')]
+
+
+[template public gamefinish(aJeu : Jeu)]
+
+[comment @main/]
+[file (aJeu.name + 'finish' + '.ltl', false, 'UTF-8')]
+['op finished = '/][let fs : OrderedSet(Lieu) = aJeu.getFins() ] 
+[if (fs->size() > 0)]
+[for (f : Lieu | fs) separator (' \\/ ') after(';')][f.name/][/for]
+[else]
+None
+[/if]
+[/let]
+['[] (finished => dead);'/]
+['[] <> dead ;'/]
+['[] (dead => finished);'/]
+['- <> finished;'/]
+[/file]
+
+[/template]
+
+[query public getFins(j: Jeu) : OrderedSet(Lieu) = 
+	j.fins->asOrderedSet()
+/]

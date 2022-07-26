@@ -1,0 +1,18 @@
+MM SimplePDL :
+
+* Pas la bonne image...
+
+
+MM PetriNet :
+
+* On n'a pas besoin de représenter les objets Jeton, seul le nombre de jeton
+* Tous les attributs devraient avoir une multiplicité de 1..1
+* Pourquoi ne pas factoriser dans Boite l'attribut « name » présent dans Place
+  et Transition ?
+
+
+OCL SimplePDL :
+
+* Supprimer les invariants inutiles.
+* On pourrait ajouter une contrainte sur le nb de  RessourcesNecessaires
+

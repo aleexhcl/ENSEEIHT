@@ -1,0 +1,1 @@
+* On doit engendrer un programme autonome, qui ne s'appuie pas sur EMF.

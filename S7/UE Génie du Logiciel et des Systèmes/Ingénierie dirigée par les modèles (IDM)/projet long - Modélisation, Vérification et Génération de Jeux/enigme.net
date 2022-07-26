@@ -1,0 +1,6 @@
+pl enigme (3)
+tr tentative enigme*1 -> sphinx*1
+tr choix1 sphinx*1 -> BonneReponse*1 
+tr choix2 sphinx*1 ->  MauvaiseReponse*1
+tr reussite BonneReponse*1 -> succes*1
+tr ZeroTentative MauvaiseReponse*3 -> echec

@@ -1,0 +1,51 @@
+###############################  Model ###############################
+
+
+###############################  Sets  ###############################
+
+set PERSONNES;
+
+set TRAVAUX;	
+
+################### Variables ###################
+
+var trav{i in PERSONNES, j in TRAVAUX}, binary;  
+
+###################  Constants: Data to load   #########################
+
+param coutform{i in PERSONNES, j in TRAVAUX};
+
+################### Constraints ###################
+
+
+s.t. RespectCapaciteDeUnTParP{i in PERSONNES}:
+  sum{j in TRAVAUX} trav[i,j] = 1;
+
+s.t. RespectCapaciteDeUnePParT{j in TRAVAUX}:
+  sum{i in PERSONNES} trav[i,j] = 1;
+
+###### Objective ######
+
+minimize CoutFormation: 
+		sum{i in PERSONNES} sum{j in TRAVAUX} trav[i,j]*coutform[i,j]; 
+
+
+data;
+
+set PERSONNES :=
+nom1
+nom2
+nom3;
+
+set TRAVAUX :=
+t1
+t2
+t3;
+
+param coutform: t1 t2 t3 :=
+nom1 1 2 3
+nom2 50 20 30
+nom3 100 50 64;
+
+end;
+

@@ -1,0 +1,20 @@
+[comment encoding = UTF-8 /]
+[module SimplePDL-invariants('http://simplepdl')]
+
+
+[template public SimplePDL-invariants(aProcess : Process)]
+[comment @main/]
+[file (aProcess.name+'.LTLinv.ltl', false, 'UTF-8')]
+
+[for (wd : WorkDefinition | aProcess.getWorkDefinitions())]
+['[] <>'/] (- ( [wd.name.concat('_ready')/] /\ [wd.name.concat('_started')/] )) /\ (- ( [wd.name.concat('_started')/] /\ [wd.name.concat('_finished')/] )) /\ (- ( [wd.name.concat('_finished')/] /\ [wd.name.concat('_ready')/] ));
+[/for]
+
+[/file]
+[/template]
+
+[query public getWorkDefinitions(p : Process) : OrderedSet(WorkDefinition) = 
+	p.processElements->select( e | e.oclIsTypeOf(WorkDefinition) )
+		->collect( e | e.oclAsType(WorkDefinition) )
+		->asOrderedSet()
+/]

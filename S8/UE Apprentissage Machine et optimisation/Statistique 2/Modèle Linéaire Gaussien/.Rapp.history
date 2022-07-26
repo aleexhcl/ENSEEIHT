@@ -1,0 +1,23 @@
+# 3 - Regression multiple : predicteurs continus#
+x11()#
+par(mfrow=c(3,2))#
+hist(data$O3p)#
+hist(data$TEMPE)#
+hist(data$FF)#
+hist(data$RMH2O)#
+hist(data$NO2)#
+hist(log(data$NO2))#
+# -> la distribution de NO2 est tres dissymetrique, l'emploi de la fonction log permet d'obtenir un profil plus adapte au modele gaussien.#
+# La symétrie des distributions des prédicteurs n'est pas une hypothèse du MLG mais elle permet de limiter les occurrences et impacts de valeurs extremes #
+# qui seraient très influentes lors de l'estimation des paramètres de régression. Le predicteur elabore sera de plus mieux correle avec
+data=read.table(file="DataTP.txt",header=TRUE)#
+names(data)#
+summary(data)#
+dim(data)
+aix=subset(data,STATION=="Aix")#
+summary(aix)#
+sd(aix$O3o)#
+sd(aix$O3p)#
+par(mfrow=c(1,2))#
+hist(aix$O3o,breaks=seq(0,300,30),ylim=c(0,100))#
+hist(aix$O3p,breaks=seq(0,300,30),ylim=c(0,100))

@@ -1,0 +1,61 @@
+Ascendant
+
+Lexer.ml > modif rule lexer = parse 
+                        | majuscule alphabet*	as texte					{ UL_IDENT texte }
+                        | ";"						                        { UL_PV }
+                        |
+    ecrire tout les non terminaux en maj , UL_NOM = token pour les fonctions ensuite dans parser 
+
+MainSystem.ml > ajouter tous les token pour les print 
+
+Parser.mll > declare tous les token 
+            %token UL_SYSTEM
+            %token <string> UL_IDENT
+
+    puis décrit les productions avec sys type diagramme de conway :
+
+    modele : UL_MODEL UL_IDENT UL_ACCOUV boucle UL_ACCFER UL_FIN { (print_endline "modele : UL_MODEL IDENT { boucle } UL_FIN ") }
+
+    boucle : { (print_endline "boucle : rien ") }
+         | bloc boucle { (print_endline "boucle : bloc boucle ") }
+         | systeme boucle { (print_endline "boucle : systeme boucle ") }
+         |flot boucle
+
+    ports : Port
+        | Port UL_VIRG ports
+
+    bloc : UL_BLOCK UL_IDENT param UL_PV {}
+
+
+    >> bien ajouter les print_endline pour afficher modele 
+
+
+
+Descendant
+
+Scanner.mll > ajouter tous les scanner idem que lexer.ml
+
+Token.ml > ajouter les token idem que MainSystem 
+
+Parser.ml > pour chaque régle , matche avec ID qui sont a droite de la grammaire (premier mot possible)
+    pour les chaine de car ou numéro > fonction acceptId à def qui verif accept sur une liste 
+
+    let acceptIdent stream = 
+  (match (peekAtFirstToken stream) with
+  | (UL_Ident _) -> (Success (advanceInStream stream))
+  | _ -> Failure
+
+    accept UL_ >>= si pas une liste, sinon acceptId >>= 
+    commence par inject STREAM
+
+    let (* rec *) parseR stream =
+  (print_string "R -> ...");
+  (match (peekAtFirstToken stream) with
+    |UL_MODEL -> inject stream >>=
+                accept UL_MODEL >>=
+                acceptIdent >>= 
+                accept UL_ACCOUV >>=
+                parseSE >>=
+                accept UL_ACCFER 
+    | _ -> Failure)
+

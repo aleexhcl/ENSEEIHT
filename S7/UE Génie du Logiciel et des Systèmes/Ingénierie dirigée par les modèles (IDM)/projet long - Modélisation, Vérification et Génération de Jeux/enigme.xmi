@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game:Jeu xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:game="http://www.n7.fr/Game"
+    name="enigme"
+    depart="//@lieux.0"
+    fins="//@lieux.2 //@lieux.1">
+  <connaissances
+      name="Reussite"
+      valeur="&quot;&quot;"/>
+  <objets name="Tentative"
+      taille="1"
+      quantite="3"/>
+  <lieux name="enigme">
+    <personnes
+        name="Sphinx"
+        Obligatoire="true">
+      <interaction
+          name="interaction">
+        <actions
+            name="Bonne Reponse"
+            valeur=""
+            connaissancesAtransmettre="//@connaissances.0"/>
+        <actions
+            name="Mauvaise Reponse"/>
+      </interaction>
+      <conditionVisible
+          name="Condition visible Sphinx">
+        <disjonctions>
+          <conjonctions
+              xsi:type="game:ObjetPresent"
+              objet="//@objets.0"
+              nbPoss="1"/>
+          <conjonctions
+              xsi:type="game:ConditionCon"
+              connaissance="//@connaissances.0"/>
+        </disjonctions>
+      </conditionVisible>
+      <objetsCons
+          objet="//@objets.0"
+          nbPoss="1"/>
+    </personnes>
+  </lieux>
+  <lieux name="Succes"/>
+  <lieux name="Echec"/>
+  <chemins name="succes"
+      predecessor="//@lieux.0"
+      successor="//@lieux.1"
+      Obligatoire="true">
+    <conditionVisible>
+      <disjonctions
+          name="avoir Reussite">
+        <conjonctions
+            xsi:type="game:ConditionCon"
+            connaissance="//@connaissances.0"/>
+      </disjonctions>
+    </conditionVisible>
+  </chemins>
+  <chemins name="echec"
+      predecessor="//@lieux.0"
+      successor="//@lieux.2"
+      Obligatoire="true">
+    <conditionVisible>
+      <disjonctions>
+        <conjonctions
+            xsi:type="game:ObjetPresent"
+            objet="//@objets.0"/>
+      </disjonctions>
+    </conditionVisible>
+  </chemins>
+  <explorateur
+      name="explorateur"
+      position="//@lieux.0"
+      tailleLimite="3">
+    <objetsPossedes
+        objet="//@objets.0"
+        nbPoss="3"/>
+  </explorateur>
+</game:Jeu>

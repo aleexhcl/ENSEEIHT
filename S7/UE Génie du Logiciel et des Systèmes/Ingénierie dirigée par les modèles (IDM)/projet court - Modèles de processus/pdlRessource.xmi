@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ASCII"?>
+<simplepdl:Process
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:simplepdl="http://simplepdl"
+    name="Mon premier processus">
+  <processElements
+      xsi:type="simplepdl:WorkDefinition"
+      linksToPredecessors="//@processElements.5 //@processElements.7 //@processElements.6"
+      linksToSuccessors="//@processElements.4"
+      name="wd1">
+    <linkToRessources
+        nb="5"
+        ressourceutilise="//@processElements.9"
+        ressourcePredecessor="//@processElements.0"/>
+    <linkToRessources
+        nb="6"
+        ressourceutilise="//@processElements.10"
+        ressourcePredecessor="//@processElements.0"/>
+  </processElements>
+  <processElements
+      xsi:type="simplepdl:WorkDefinition"
+      linksToSuccessors="//@processElements.5"
+      name="wd2"/>
+  <processElements
+      xsi:type="simplepdl:WorkDefinition"
+      linksToPredecessors="//@processElements.4"
+      linksToSuccessors="//@processElements.6"
+      name="wd3"/>
+  <processElements
+      xsi:type="simplepdl:WorkDefinition"
+      linksToSuccessors="//@processElements.7"
+      name="wd4"/>
+  <processElements
+      xsi:type="simplepdl:WorkSequence"
+      predecessor="//@processElements.0"
+      successor="//@processElements.2"/>
+  <processElements
+      xsi:type="simplepdl:WorkSequence"
+      linkType="startToFinish"
+      predecessor="//@processElements.1"
+      successor="//@processElements.0"/>
+  <processElements
+      xsi:type="simplepdl:WorkSequence"
+      linkType="finishToFinish"
+      predecessor="//@processElements.2"
+      successor="//@processElements.0"/>
+  <processElements
+      xsi:type="simplepdl:WorkSequence"
+      predecessor="//@processElements.3"
+      successor="//@processElements.0"/>
+  <processElements
+      xsi:type="simplepdl:Guidance"
+      text="c'est la deuxieme WorkDefinition"
+      elements="//@processElements.1"/>
+  <processElements
+      xsi:type="simplepdl:Ressource"
+      name="dev"
+      quantite="10"/>
+  <processElements
+      xsi:type="simplepdl:Ressource"
+      name="Ordinateur"
+      quantite="8"/>
+</simplepdl:Process>
